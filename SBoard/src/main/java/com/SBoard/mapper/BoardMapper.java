@@ -16,7 +16,7 @@ public interface BoardMapper {
 	public BoardVO read(Long bno);
 	
 	// 글수정 메서드 U
-	public int update(Long bno);
+	public int update(BoardVO board);
 	
 	// 글삭제 메서드 D
 	public int delete(Long bno);
