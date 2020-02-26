@@ -13,7 +13,7 @@ insert into tbl_board (bno,btitle,bcontent,bwriter)
 values (seq_board.nextval,#{btitle},#{bcontent},#{bwriter})
 </insert>
 
-<select id="read" resultType="com.SBoard.VO.BoardVO">
+<select id="read" resultType="com.SBoard.vo.BoardVO">
 select * from tbl_board where bno = #{bno}
 </select>
 

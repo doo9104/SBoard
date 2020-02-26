@@ -1,7 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>SBoard</title>
 
-<link href="/resources/css/bootstrap-min.css" rel="stylesheet" type="text/css">
-<!--   <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css">-->
+<!-- <link href="/resources/css/bootstrap-min.css" rel="stylesheet" type="text/css"> -->
+<link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css">
+
 
 </head>
 <body>
+<!-- 네비게이션 바 -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="#">SBoard</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,5 +39,10 @@
     </form>
   </div>
 </nav>
-</body>
-</html>
+<!-- 네비게이션 바 끝 -->  
+            
+            
+            
+<!-- 메인 컨텐츠 시작 -->
+<div class="container"> <!-- 가-1 -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
