@@ -26,19 +26,27 @@ public class BoardController {
 	@GetMapping("/list") // list는 게시물의 목록을 전송해야 하므로 addAttribute를 사용해 model을 파라미터로 설정하고 이를 BoardServiceImpl 객체의 getList() 결과를 담아 전달함 
 	public void list(Model model) {
 		
-		log.info("list");
+		log.info("list ");
 		
 		model.addAttribute("list",service.getList());
 	}
+	
+	
+	@GetMapping("/register")
+	public void register() {
+		
+	}
+	
 	
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes rttr) {
 		
 		// 게시글 등록후 목록화면으로 이동하기 위해 RedirectAttributes를 파라미터로 지정하고 새로 등록된 게시물의 번호를 같이 전달하기 위해 사용
-		log.info("register" + board);
+		log.info("register : " + board);
 		
 		service.register(board);
 		
+		// 일회성으로 데이터를 전달하는 addFlashAttribute를 이용
 		rttr.addFlashAttribute("result", board.getBno());
 		return "redirect:/board/list";
 	}
@@ -46,14 +54,14 @@ public class BoardController {
 	@GetMapping("/get")
 	public void get(@RequestParam("bno") Long bno, Model model) {
 		// 화면으로 해당 bno의 게시글을 전달해야하므로 model을 파라미터로 지정
-		log.info("get");
+		log.info("get : ");
 		model.addAttribute("board",service.get(bno));
 	}
 	
 	@PostMapping("/modify")
 	public String modify(BoardVO board, RedirectAttributes rttr) {
 		//service.modify는 수정 여부를 boolean타입으로 지정했으므로 성공한 경우에만 RedirectAttributes에 저장
-		log.info("modify" + board);
+		log.info("modify : " + board);
 		
 		if(service.modify(board)) {
 			rttr.addFlashAttribute("result", "success");
@@ -64,7 +72,7 @@ public class BoardController {
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
 		
-		log.info("remove" + bno);
+		log.info("remove : " + bno);
 		if(service.remove(bno)) {
 			rttr.addFlashAttribute("result","success");
 		}

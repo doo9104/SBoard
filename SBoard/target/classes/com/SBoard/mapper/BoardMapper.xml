@@ -9,8 +9,15 @@ select * from tbl_board where bno > 0
 </select>
 
 <insert id="insert">
+<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+select seq_board.nextval from dual
+</selectKey>
 insert into tbl_board (bno,btitle,bcontent,bwriter)
-values (seq_board.nextval,#{btitle},#{bcontent},#{bwriter})
+values (#{bno},#{btitle},#{bcontent},#{bwriter})
+<!-- insert into tbl_board (bno,btitle,bcontent,bwriter)
+values (seq_board.nextval,#{btitle},#{bcontent},#{bwriter}) -->
+<!-- 이렇게하면  bno값이 제대로 전달이 안되서 pk값을 @SelectKey를 이용해서 pk값을 미리 sql문을 통해 처리해놓은다음 보관
+Modal 전송할 때 result 값에 bno가 제대로 전달이 안되서 수정 -->
 </insert>
 
 <select id="read" resultType="com.SBoard.vo.BoardVO">
