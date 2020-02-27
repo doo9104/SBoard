@@ -19,8 +19,7 @@
     <div class="form-group">
       <label for="bwriter">작성자</label>
       <input class="form-control" id="bwriter" name='bwriter'>
-    </div>
-    
+    </div>   
     <button type="submit" class="btn btn-primary">글작성</button>
   </fieldset>
 </form>

@@ -5,8 +5,8 @@
 <%@include file="../includes/header.jsp" %>
 
 
-	<!-- 테이블 시작 -->
-  <table class="table table-hover" style="border-style:solid;">
+	<!-- 테이블 시작 style="border-style:solid;" -->
+  <table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">글번호</th>
@@ -21,7 +21,7 @@
   <c:forEach items="${list}" var="board">
   <tr>
   <td><c:out value="${board.bno}" /></td>
-  <td><c:out value="${board.btitle}" /></td>
+  <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.btitle}" /></a></td>
   <td><c:out value="${board.bwriter}" /></td>
   <td><c:out value="${board.bhit}" /></td>
   <td><c:out value="${board.brec_up}" /></td>
@@ -62,9 +62,14 @@ $(document).ready(function() {
 	
 	showModal(result);
 	
+	history.replaceState({},null,null);
+	// 리스트에서 등록 후 모달창이 뜨고 뒤로가기 후에 다시 리스트 오면 모달창이 또 뜨는 문제를 방지하기 위해
+ 	// window의 history객체를 이용해서 현재 페이지는 모달창을 띄울 필요가 없다는것을 설정
+
+	
 	function showModal(result) {
 		
-		if (result == '') {
+		if (result == '' || history.state) {
 			return;
 		}
 		

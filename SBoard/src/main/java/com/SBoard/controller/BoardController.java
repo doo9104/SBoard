@@ -51,10 +51,11 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@GetMapping("/get")
+	// 중괄호로 감싸주면 여러개 매핑처리 가능
+	@GetMapping({"/get","/modify"})
 	public void get(@RequestParam("bno") Long bno, Model model) {
 		// 화면으로 해당 bno의 게시글을 전달해야하므로 model을 파라미터로 지정
-		log.info("get : ");
+		log.info("get or modify");
 		model.addAttribute("board",service.get(bno));
 	}
 	
@@ -65,6 +66,7 @@ public class BoardController {
 		
 		if(service.modify(board)) {
 			rttr.addFlashAttribute("result", "success");
+			log.info("modify success");
 		}
 		return "redirect:/board/list";
 	}
