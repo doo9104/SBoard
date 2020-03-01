@@ -33,6 +33,39 @@
 	<!-- 테이블 끝 -->
 	<button type="button" onclick="location.href='register'" class="btn btn-primary">글작성</button>
 	<!-- 글작성 버튼  끝-->
+	<p/>
+	
+	<!-- 페이지네이션 시작-->
+			<div>
+		  <ul class="pagination">
+		    <li class="page-item disabled">
+		      <a class="page-link" href="#">&laquo;</a>
+		    </li>
+		    <li class="page-item active">
+		      <a class="page-link" href="#">1</a>
+		    </li>
+		    <li class="page-item">
+		      <a class="page-link" href="#">2</a>
+		    </li>
+		    <li class="page-item">
+		      <a class="page-link" href="#">3</a>
+		    </li>
+		    <li class="page-item">
+		      <a class="page-link" href="#">4</a>
+		    </li>
+		    <li class="page-item">
+		      <a class="page-link" href="#">5</a>
+		    </li>
+		    <li class="page-item">
+		      <a class="page-link" href="#">&raquo;</a>
+		    </li>
+		  </ul>
+		</div>
+	
+	
+
+	<!-- 페이지네이션 끝 -->
+	
 	
 	<!-- 모달창 시작-->
 	<div class="modal" id="myModal">
