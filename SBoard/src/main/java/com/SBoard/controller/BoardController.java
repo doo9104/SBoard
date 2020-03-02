@@ -3,6 +3,7 @@ package com.SBoard.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.SBoard.service.BoardService;
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
+import com.SBoard.vo.PageDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -30,6 +32,10 @@ public class BoardController {
 		log.info("list " + page);
 		
 		model.addAttribute("list",service.getList(page));
+
+
+		int total = service.totalCount(page);
+		model.addAttribute("pageMaker", new PageDTO(page,total));
 	}
 	
 	
@@ -54,14 +60,14 @@ public class BoardController {
 	
 	// 중괄호로 감싸주면 여러개 매핑처리 가능
 	@GetMapping({"/get","/modify"})
-	public void get(@RequestParam("bno") Long bno, Model model) {
+	public void get(@RequestParam("bno") Long bno,@ModelAttribute("page") BoardPageVO page, Model model) {
 		// 화면으로 해당 bno의 게시글을 전달해야하므로 model을 파라미터로 지정
 		log.info("get or modify");
 		model.addAttribute("board",service.get(bno));
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
+	public String modify(BoardVO board, @ModelAttribute("page") BoardPageVO page,RedirectAttributes rttr) {
 		//service.modify는 수정 여부를 boolean타입으로 지정했으므로 성공한 경우에만 RedirectAttributes에 저장
 		log.info("modify : " + board);
 		
@@ -69,16 +75,23 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 			log.info("modify success");
 		}
+		
+		rttr.addAttribute("pageNum",page.getPageNum());
+		rttr.addAttribute("amount",page.getAmount());
+		
 		return "redirect:/board/list";
 	}
 	
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno,@ModelAttribute("page") BoardPageVO page, RedirectAttributes rttr) {
 		
 		log.info("remove : " + bno);
 		if(service.remove(bno)) {
 			rttr.addFlashAttribute("result","success");
 		}
+		rttr.addAttribute("pageNum",page.getPageNum());
+		rttr.addAttribute("amount",page.getAmount());
+		
 		return "redirect:/board/list";
 	}
 	

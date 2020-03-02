@@ -48,5 +48,12 @@ public class BoardServiceImpl implements BoardService {
 		log.info("글 가져오기" + page);
 		return mapper.getListPaging(page);
 	}
+	
+	@Override
+	public int totalCount(BoardPageVO page) {
+		log.info("전체 게시글 갯수 가져오기");
+		return mapper.totalCount(page);
+	}
+	
 
 }

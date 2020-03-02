@@ -6,6 +6,9 @@
 <%@include file="../includes/header.jsp" %>
 <p/>
 <form role="form" action="/board/modify" method="post">
+		<input type='hidden' name='pageNum' value='${page.pageNum}'>
+		<input type='hidden' name='amount' value='${page.amount}'>
+
   <fieldset>
     <legend>글 수정</legend>
     
@@ -35,6 +38,7 @@
     <button data-oper='modify' type="submit" class="btn btn-outline-primary">수정</button>
     <button data-oper='remove' type="submit" class="btn btn-danger">삭제</button>
     <button data-oper='list' type="submit" class="btn btn-primary">목록</button>
+    
   </fieldset>
 </form>
 	<p/>
@@ -56,7 +60,11 @@ $(document).ready(function() {
 			formObj.attr("action", "/board/remove");
 		}else if(operation === 'list') {
 			formObj.attr("action","/board/list").attr("method","get");
+			var pageNumTag = $("input[name='pageNum']").clone();
+			var amountTag = $("input[name='amount']").clone();
 			formObj.empty();
+			formObj.append(PageNumTag);
+			formObj.append(amount);
 		}
 		formObj.submit();
 	});

@@ -23,8 +23,13 @@
     <button data-oper='modify' class="btn btn-outline-primary">글 수정</button>
     <button data-oper='list' class="btn btn-primary">목록</button>
   </fieldset>
+	
+	
+	
 	<form id="operForm" action="/board/modify" method="get">
 	<input type="hidden" id="bno" name="bno" value='<c:out value="${board.bno }"/>'>
+	<input type='hidden' name='pageNum' value='${page.pageNum}'>
+		<input type='hidden' name='amount' value='${page.amount}'>
 	</form>
 				
 

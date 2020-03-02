@@ -38,14 +38,19 @@ where bno = #{bno}
 delete from tbl_board where bno = #{bno} 
 </delete>
 
-<select id="getListPaging" resultType="com.SBoard.BoardVO">
+<!--
+힌트를 사용 
+order by를 사용할 수 있지만 차후 데이터가 많아질 경우 속도가 매우 느려진다.
+이미 정렬된 인덱스pk board를 사용하는것이 좋은 방법
+-->
+<select id="getListPaging" resultType="com.SBoard.vo.BoardVO">
 <![CDATA[
 select
-	bno,btitle,bcontent,bwriter,bregdate,bupdateregdate
+	bno,btitle,bcontent,bwriter,bhit,bregdate,bupdateregdate
 from
 	(
 	select /*+INDEX_DESC(tbl_board pk_board) */
-		rownum rn,bno,btitle,bcontent,bwriter,bregdate,bupdateregdate
+		rownum rn,bno,btitle,bcontent,bwriter,bhit,bregdate,bupdateregdate
 	from
 		tbl_board
 	where rownum <= #{pageNum} * #{amount}
@@ -54,5 +59,8 @@ where rn > (#{pageNum} -1) * #{amount}
 ]]>
 </select>
 
+<select id="totalCount" resultType="int">
+select count(*) from tbl_board where bno > 0
+</select>
 
 </mapper>

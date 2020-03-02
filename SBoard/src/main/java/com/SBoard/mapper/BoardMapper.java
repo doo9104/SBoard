@@ -25,6 +25,9 @@ public interface BoardMapper {
 	// 글삭제 메서드 D
 	public int delete(Long bno);
 	
+	// 전체 글 갯수 구하기 메서드 BoardPageVO page타입을 파라미터로 사용
+	public int totalCount(BoardPageVO page);
+	
 	
 	
 }

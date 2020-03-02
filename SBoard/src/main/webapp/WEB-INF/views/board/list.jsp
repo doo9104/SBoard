@@ -21,7 +21,7 @@
   <c:forEach items="${list}" var="board">
   <tr>
   <td><c:out value="${board.bno}" /></td>
-  <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.btitle}" /></a></td>
+  <td><a class='move' href='<c:out value="${board.bno}"/>'><c:out value="${board.btitle}" /></a></td>
   <td><c:out value="${board.bwriter}" /></td>
   <td><c:out value="${board.bhit}" /></td>
   <td><c:out value="${board.brec_up}" /></td>
@@ -38,33 +38,33 @@
 	<!-- 페이지네이션 시작-->
 			<div>
 		  <ul class="pagination">
-		    <li class="page-item disabled">
-		      <a class="page-link" href="#">&laquo;</a>
-		    </li>
-		    <li class="page-item active">
-		      <a class="page-link" href="#">1</a>
-		    </li>
+		  
+		  <c:if test="${pageMaker.prev}">
 		    <li class="page-item">
-		      <a class="page-link" href="#">2</a>
+		      <a class="page-link" href="${pageMaker.startPage -1}">&laquo;</a>
 		    </li>
+		  </c:if>
+		  
+		  <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+		   <li class="page-item ${pageMaker.page.pageNum == num ? "active":""} ">
+		      <a class="page-link" href="${num}">${num}</a>
+		    </li>
+		  </c:forEach>
+		  
+		   <c:if test="${pageMaker.next}">
 		    <li class="page-item">
-		      <a class="page-link" href="#">3</a>
+		      <a class="page-link" href="${pageMaker.endPage +1}">&raquo;</a>
 		    </li>
-		    <li class="page-item">
-		      <a class="page-link" href="#">4</a>
-		    </li>
-		    <li class="page-item">
-		      <a class="page-link" href="#">5</a>
-		    </li>
-		    <li class="page-item">
-		      <a class="page-link" href="#">&raquo;</a>
-		    </li>
+		  </c:if>
+	
 		  </ul>
 		</div>
-	
-	
-
 	<!-- 페이지네이션 끝 -->
+	
+	<form id='actionForm' action="/board/list" method='get'>
+		<input type='hidden' name='pageNum' value='${pageMaker.page.pageNum}'>
+		<input type='hidden' name='amount' value='${pageMaker.page.amount}'>
+	</form>
 	
 	
 	<!-- 모달창 시작-->
@@ -113,7 +113,22 @@ $(document).ready(function() {
 		$("#myModal").modal("show");
 	}
 	
+	var actionForm = $("#actionForm");
+	$(".page-item a").on("click", function(e) {
+		
+		e.preventDefault();
+		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+		actionForm.submit();
+	});
 	
+	
+	$(".move").on("click",function(e) {
+		
+		e.preventDefault();
+		actionForm.append("<input type='hidden' name='bno' value='"+$(this).attr("href")+"'>");
+		actionForm.attr("action","/board/get");
+		actionForm.submit();
+	});
 	
 	
 }); /* 도큐먼트 레디 괄호 */
