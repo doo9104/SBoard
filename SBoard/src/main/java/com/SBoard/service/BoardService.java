@@ -2,6 +2,7 @@ package com.SBoard.service;
 
 import java.util.List;
 
+import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
 
 public interface BoardService {
@@ -14,5 +15,7 @@ public interface BoardService {
 	
 	public boolean remove(Long bno);
 	
-	public List<BoardVO> getList();
+//	public List<BoardVO> getList();
+	
+	public List<BoardVO> getList(BoardPageVO page);
 }

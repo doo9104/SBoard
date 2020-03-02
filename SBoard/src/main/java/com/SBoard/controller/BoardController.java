@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.SBoard.service.BoardService;
+import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
 
 import lombok.AllArgsConstructor;
@@ -24,11 +25,11 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/list") // list는 게시물의 목록을 전송해야 하므로 addAttribute를 사용해 model을 파라미터로 설정하고 이를 BoardServiceImpl 객체의 getList() 결과를 담아 전달함 
-	public void list(Model model) {
+	public void list(BoardPageVO page,Model model) {
 		
-		log.info("list ");
+		log.info("list " + page);
 		
-		model.addAttribute("list",service.getList());
+		model.addAttribute("list",service.getList(page));
 	}
 	
 	

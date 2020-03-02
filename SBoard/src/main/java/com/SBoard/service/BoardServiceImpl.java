@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
 import com.SBoard.mapper.BoardMapper;
 
@@ -43,9 +44,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> getList() {
-		log.info("글 가져오기");
-		return mapper.getList();
+	public List<BoardVO> getList(BoardPageVO page) {
+		log.info("글 가져오기" + page);
+		return mapper.getListPaging(page);
 	}
 
 }

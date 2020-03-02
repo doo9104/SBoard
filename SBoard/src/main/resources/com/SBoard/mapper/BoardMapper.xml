@@ -38,4 +38,21 @@ where bno = #{bno}
 delete from tbl_board where bno = #{bno} 
 </delete>
 
+<select id="getListPaging" resultType="com.SBoard.BoardVO">
+<![CDATA[
+select
+	bno,btitle,bcontent,bwriter,bregdate,bupdateregdate
+from
+	(
+	select /*+INDEX_DESC(tbl_board pk_board) */
+		rownum rn,bno,btitle,bcontent,bwriter,bregdate,bupdateregdate
+	from
+		tbl_board
+	where rownum <= #{pageNum} * #{amount}
+	)
+where rn > (#{pageNum} -1) * #{amount}
+]]>
+</select>
+
+
 </mapper>
