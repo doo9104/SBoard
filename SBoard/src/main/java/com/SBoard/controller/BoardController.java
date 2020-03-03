@@ -77,12 +77,14 @@ public class BoardController {
 			log.info("modify success");
 		}
 		
-		rttr.addAttribute("pageNum",page.getPageNum());
-		rttr.addAttribute("amount",page.getAmount());
-		rttr.addAttribute("keyword",page.getKeyword());
-		rttr.addAttribute("searchType",page.getSearchType());
+		/*
+		 * rttr.addAttribute("pageNum",page.getPageNum());
+		 * rttr.addAttribute("amount",page.getAmount());
+		 * rttr.addAttribute("keyword",page.getKeyword());
+		 * rttr.addAttribute("searchType",page.getSearchType());
+		 */
 		
-		return "redirect:/board/list";
+		return "redirect:/board/list" + page.makeParam();
 	}
 	
 	@PostMapping("/remove")
@@ -92,12 +94,12 @@ public class BoardController {
 		if(service.remove(bno)) {
 			rttr.addFlashAttribute("result","success");
 		}
-		rttr.addAttribute("pageNum",page.getPageNum());
+		/*rttr.addAttribute("pageNum",page.getPageNum());
 		rttr.addAttribute("amount",page.getAmount());
 		rttr.addAttribute("keyword",page.getKeyword());
-		rttr.addAttribute("searchType",page.getSearchType());
+		rttr.addAttribute("searchType",page.getSearchType());*/
 		
-		return "redirect:/board/list";
+		return "redirect:/board/list" + page.makeParam();
 	}
 	
 }
