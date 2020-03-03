@@ -7,10 +7,11 @@
 
 <!-- <link href="/resources/css/bootstrap-min.css" rel="stylesheet" type="text/css"> -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css">
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
 </head>
 <body>
+
 <!-- 네비게이션 바 -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="/board/list">SBoard</a>
@@ -45,4 +46,5 @@
             
 <!-- 메인 컨텐츠 시작 -->
 <div class="container"> <!-- 가-1 -->
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -13,6 +13,7 @@ import com.SBoard.service.BoardService;
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
 import com.SBoard.vo.PageDTO;
+import com.SBoard.vo.SearchDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -27,7 +28,7 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/list") // list는 게시물의 목록을 전송해야 하므로 addAttribute를 사용해 model을 파라미터로 설정하고 이를 BoardServiceImpl 객체의 getList() 결과를 담아 전달함 
-	public void list(BoardPageVO page,Model model) {
+	public void list(SearchDTO page,Model model) {
 		
 		log.info("list " + page);
 		
@@ -60,14 +61,14 @@ public class BoardController {
 	
 	// 중괄호로 감싸주면 여러개 매핑처리 가능
 	@GetMapping({"/get","/modify"})
-	public void get(@RequestParam("bno") Long bno,@ModelAttribute("page") BoardPageVO page, Model model) {
+	public void get(@RequestParam("bno") Long bno,@ModelAttribute("page") SearchDTO page, Model model) {
 		// 화면으로 해당 bno의 게시글을 전달해야하므로 model을 파라미터로 지정
 		log.info("get or modify");
 		model.addAttribute("board",service.get(bno));
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO board, @ModelAttribute("page") BoardPageVO page,RedirectAttributes rttr) {
+	public String modify(BoardVO board, @ModelAttribute("page") SearchDTO page,RedirectAttributes rttr) {
 		//service.modify는 수정 여부를 boolean타입으로 지정했으므로 성공한 경우에만 RedirectAttributes에 저장
 		log.info("modify : " + board);
 		
@@ -78,12 +79,14 @@ public class BoardController {
 		
 		rttr.addAttribute("pageNum",page.getPageNum());
 		rttr.addAttribute("amount",page.getAmount());
+		rttr.addAttribute("keyword",page.getKeyword());
+		rttr.addAttribute("searchType",page.getSearchType());
 		
 		return "redirect:/board/list";
 	}
 	
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno,@ModelAttribute("page") BoardPageVO page, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno,@ModelAttribute("page") SearchDTO page, RedirectAttributes rttr) {
 		
 		log.info("remove : " + bno);
 		if(service.remove(bno)) {
@@ -91,6 +94,8 @@ public class BoardController {
 		}
 		rttr.addAttribute("pageNum",page.getPageNum());
 		rttr.addAttribute("amount",page.getAmount());
+		rttr.addAttribute("keyword",page.getKeyword());
+		rttr.addAttribute("searchType",page.getSearchType());
 		
 		return "redirect:/board/list";
 	}

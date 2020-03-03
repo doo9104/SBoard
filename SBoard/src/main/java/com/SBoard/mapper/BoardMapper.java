@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
+import com.SBoard.vo.SearchDTO;
 
 public interface BoardMapper {
 
@@ -11,7 +12,9 @@ public interface BoardMapper {
 	public List<BoardVO> getList();
 	
 	// BoardPageVO에서 넘어오는 파라미터를 사용하는 메서드(페이징)
-	public List<BoardVO> getListPaging(BoardPageVO page);
+	/* public List<BoardVO> getListPaging(BoardPageVO page); */
+	
+	public List<BoardVO> getListPaging(SearchDTO page);
 	
 	// 글쓰기 메서드 C
 	public void insert(BoardVO board);
@@ -26,7 +29,8 @@ public interface BoardMapper {
 	public int delete(Long bno);
 	
 	// 전체 글 갯수 구하기 메서드 BoardPageVO page타입을 파라미터로 사용
-	public int totalCount(BoardPageVO page);
+	/* public int totalCount(BoardPageVO page); */
+	public int totalCount(SearchDTO page);
 	
 	
 	

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
+import com.SBoard.vo.SearchDTO;
 
 public interface BoardService {
 
@@ -17,7 +18,7 @@ public interface BoardService {
 	
 //	public List<BoardVO> getList();
 	
-	public List<BoardVO> getList(BoardPageVO page);
-	
-	public int totalCount(BoardPageVO page);
+	/* public List<BoardVO> getList(BoardPageVO page); */
+	public List<BoardVO> getList(SearchDTO page);
+	public int totalCount(SearchDTO page);
 }

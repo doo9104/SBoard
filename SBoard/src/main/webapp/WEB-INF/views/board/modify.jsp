@@ -6,8 +6,10 @@
 <%@include file="../includes/header.jsp" %>
 <p/>
 <form role="form" action="/board/modify" method="post">
-		<input type='hidden' name='pageNum' value='${page.pageNum}'>
-		<input type='hidden' name='amount' value='${page.amount}'>
+		<input type='hidden' name='pageNum' value='<c:out value="${page.pageNum }"/>'>
+		<input type='hidden' name='amount' value='<c:out value="${page.amount}"/>'>
+		<input type='hidden' name='keyword' value='<c:out value="${page.keyword }"/>'>
+		<input type='hidden' name='searchType' value='<c:out value="${page.searchType }"/>'>
 
   <fieldset>
     <legend>글 수정</legend>
@@ -60,12 +62,18 @@ $(document).ready(function() {
 			formObj.attr("action", "/board/remove");
 		}else if(operation === 'list') {
 			formObj.attr("action","/board/list").attr("method","get");
+			
 			var pageNumTag = $("input[name='pageNum']").clone();
 			var amountTag = $("input[name='amount']").clone();
+			var keywordTag = $("input[name='keyword']").clone();
+			var searchTypeTag = $("input[name='searchType']").clone();
+			
 			formObj.empty();
-			formObj.append(PageNumTag);
-			formObj.append(amount);
-		}
+			formObj.append(pageNumTag);
+			formObj.append(amountTag);
+			formObj.append(keywordTag);
+			formObj.append(searchTypeTag);
+			}
 		formObj.submit();
 	});
 	

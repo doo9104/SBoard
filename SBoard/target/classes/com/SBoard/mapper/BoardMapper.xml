@@ -44,7 +44,7 @@ order by를 사용할 수 있지만 차후 데이터가 많아질 경우 속도�
 이미 정렬된 인덱스pk board를 사용하는것이 좋은 방법
 -->
 <select id="getListPaging" resultType="com.SBoard.vo.BoardVO">
-<![CDATA[
+ <![CDATA[ 
 select
 	bno,btitle,bcontent,bwriter,bhit,bregdate,bupdateregdate
 from
@@ -53,7 +53,9 @@ from
 		rownum rn,bno,btitle,bcontent,bwriter,bhit,bregdate,bupdateregdate
 	from
 		tbl_board
-	where rownum <= #{pageNum} * #{amount}
+	where rownum <= #{pageNum} * #{amount} ]]><include refid="search"></include>
+ 
+ <![CDATA[ 
 	)
 where rn > (#{pageNum} -1) * #{amount}
 ]]>
@@ -61,6 +63,20 @@ where rn > (#{pageNum} -1) * #{amount}
 
 <select id="totalCount" resultType="int">
 select count(*) from tbl_board where bno > 0
+<include refid="search"></include>
 </select>
+
+
+
+<sql id="search">
+<if test="searchType != null">
+	<if test="searchType == 'T'.toString()">AND btitle like '%' || #{keyword} || '%'</if>
+	<if test="searchType == 'C'.toString()">AND bcontent like '%' || #{keyword} || '%'</if>
+	<if test="searchType == 'TC'.toString()">AND (btitle like '%' || #{keyword} || '%' or bcontent like '%' || #{keyword} || '%')</if>
+	<if test="searchType == 'W'.toString()">AND bwriter like '%' || #{keyword} || '%'</if>
+</if>
+</sql>
+
+
 
 </mapper>

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
+import com.SBoard.vo.SearchDTO;
 import com.SBoard.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -44,13 +45,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> getList(BoardPageVO page) {
+	public List<BoardVO> getList(SearchDTO page) {
 		log.info("글 가져오기" + page);
 		return mapper.getListPaging(page);
 	}
 	
 	@Override
-	public int totalCount(BoardPageVO page) {
+	public int totalCount(SearchDTO page) {
 		log.info("전체 게시글 갯수 가져오기");
 		return mapper.totalCount(page);
 	}
