@@ -4,6 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@include file="../includes/header.jsp" %>
+
+<script src="/resources/js/ckeditor.js"></script>
+
+
 <p/>
 
   <fieldset>
@@ -55,6 +59,19 @@ $(document).ready(function() {
 	
 	
 });
+
+
+
+ClassicEditor
+        .create( document.querySelector( '#bcontent' ) )
+        .then( editor => {
+                console.log( editor );
+                editor.isReadOnly = true;
+        } )
+        .catch( error => {
+                console.error( error );
+        } );
+
 
 
 </script>

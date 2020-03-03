@@ -4,6 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@include file="../includes/header.jsp" %>
+<script src="/resources/js/ckeditor.js"></script>
+
+
 <p/>
 <form role="form" action="/board/register" method="post">
   <fieldset>
@@ -23,6 +26,16 @@
     <button type="submit" class="btn btn-primary">글작성</button>
   </fieldset>
 </form>
-	
+
+				<script>
+                        ClassicEditor
+                                .create( document.querySelector( '#bcontent' ) )
+                                .then( editor => {
+                                        console.log( editor );
+                                } )
+                                .catch( error => {
+                                        console.error( error );
+                                } );
+                </script>
 
 <%@include file="../includes/footer.jsp" %>

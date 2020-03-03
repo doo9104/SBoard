@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@include file="../includes/header.jsp" %>
+<script src="/resources/js/ckeditor.js"></script>
+
 <p/>
 <form role="form" action="/board/modify" method="post">
 		<input type='hidden' name='pageNum' value='<c:out value="${page.pageNum }"/>'>
@@ -79,6 +81,16 @@ $(document).ready(function() {
 	
 	
 });
+
+ClassicEditor
+.create( document.querySelector( '#bcontent' ) )
+.then( editor => {
+        console.log( editor );
+} )
+.catch( error => {
+        console.error( error );
+} );
+
 
 
 </script>

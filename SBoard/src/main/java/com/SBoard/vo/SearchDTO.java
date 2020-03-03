@@ -22,7 +22,7 @@ public class SearchDTO extends BoardPageVO {
 	 * URI를 동적으로 생성해주는 클래스
 	 * 파라미터가 조합된 URI를 쉽게 만들어준다
 	 * rest스타일로 개발하는데 편리
-	 */
+	*/
 	public String makeParam() {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
 				.queryParam("pageNum", this.getPageNum())
