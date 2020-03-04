@@ -32,7 +32,8 @@ public interface BoardMapper {
 	/* public int totalCount(BoardPageVO page); */
 	public int totalCount(SearchDTO page);
 	
-	
+	// 조회수 증가 메서드
+	void updateHit(Long bno);
 	
 }
 

@@ -56,5 +56,11 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.totalCount(page);
 	}
 	
+	@Override
+	public void updateHit(Long bno) {
+		log.info("조회수 증가");
+		this.mapper.updateHit(bno);
+	}
+	
 
 }

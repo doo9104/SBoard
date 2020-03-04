@@ -63,9 +63,12 @@ public class BoardController {
 	@GetMapping({"/get","/modify"})
 	public void get(@RequestParam("bno") Long bno,@ModelAttribute("page") SearchDTO page, Model model) {
 		// 화면으로 해당 bno의 게시글을 전달해야하므로 model을 파라미터로 지정
-		log.info("get or modify");
+		log.info("get or modify" + bno);
+		service.updateHit(bno);
 		model.addAttribute("board",service.get(bno));
 	}
+	
+	
 	
 	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("page") SearchDTO page,RedirectAttributes rttr) {

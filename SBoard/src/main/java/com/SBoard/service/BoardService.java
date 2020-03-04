@@ -21,4 +21,7 @@ public interface BoardService {
 	/* public List<BoardVO> getList(BoardPageVO page); */
 	public List<BoardVO> getList(SearchDTO page);
 	public int totalCount(SearchDTO page);
+	
+	// 조회수 증가
+	public void updateHit(Long bno);
 }

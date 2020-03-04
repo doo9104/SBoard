@@ -67,7 +67,6 @@ select count(*) from tbl_board where bno > 0
 </select>
 
 
-
 <sql id="search">
 <if test="searchType != null">
 	<if test="searchType == 'T'.toString()">AND btitle like '%' || #{keyword} || '%'</if>
@@ -76,6 +75,13 @@ select count(*) from tbl_board where bno > 0
 	<if test="searchType == 'W'.toString()">AND bwriter like '%' || #{keyword} || '%'</if>
 </if>
 </sql>
+
+
+<update id="updateHit">
+update tbl_board
+set bhit = bhit + 1
+where bno = #{bno}
+</update>
 
 
 
