@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SBoard.service.CommentService;
@@ -67,9 +69,49 @@ public class CommentController {
 	// 게시물의 번호는 @PathVariable를 이용해서 파라미터로 처리한다.
 }
 
+
+	// 댓글 조회
+	@GetMapping(value = "/{cno}",
+			produces = {
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<CommentVO> get(@PathVariable("cno") Long cno) {
+		log.info("get : " + cno);
+		
+		return new ResponseEntity<>(service.get(cno), HttpStatus.OK);
+		
+	}
 	
+	// 댓글 삭제
+	@DeleteMapping(value = "/{cno}",
+			produces = { MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> remove(@PathVariable("cno") Long cno) {
+		log.info("remove : " + cno);
+		
+		return service.remove(cno) == 1
+				? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
 	
-	
+	// 댓글 수정
+	@RequestMapping(method = { RequestMethod.PUT, RequestMethod.PATCH },
+			value = "/{cno}",
+			consumes = "application/json",
+			produces = { MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> modify(
+				@RequestBody CommentVO vo,
+				@PathVariable("cno") Long cno) { 
+			vo.setCno(cno);
+				
+			log.info("cno : " + cno);
+			log.info("modify : " + vo);
+				
+			return service.modify(vo) == 1
+				? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+			
 	
 	
 	

@@ -14,10 +14,10 @@ public interface CommentMapper {
 	public int insert(CommentVO vo);
 	
 	// 댓글 조회 메서드 R
-	public CommentVO read(Long cno);
+	public CommentVO read(Long bno);
 	
 	// 댓글 수정 메서드 U
-	public int update(CommentVO vo);
+	public int update(CommentVO ccontent);
 	
 	// 댓글 삭제 메서드 D
 	public int delete(Long bno);
