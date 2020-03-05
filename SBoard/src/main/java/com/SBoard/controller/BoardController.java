@@ -87,16 +87,15 @@ public class BoardController {
 		// 화면으로 해당 bno의 게시글을 전달해야하므로 model을 파라미터로 지정
 		log.info("get : " + bno);
 				
-		// -------------------------------------------------
 		Cookie[] cookies = request.getCookies();	
-		// 비교하기 위해 새로운 쿠키 생성
+		// 비교하기 위해 새로운 널값 쿠키 생성
 		Cookie viewCookie = null;
 		// 쿠키가 있을 경우 
         if (cookies != null && cookies.length > 0) 
         {
             for (int i = 0; i < cookies.length; i++)
             {
-                // Cookie의 name이 cookie + bno와 일치하는 쿠키를 viewCookie에 넣어줌 
+                // Cookie의 name이 cookie+bno와 일치하는 쿠키를 viewCookie에 넣어줌 
                 if (cookies[i].getName().equals("cookie"+bno))
                 { 
                 	viewCookie = cookies[i];
@@ -124,10 +123,6 @@ public class BoardController {
 				log.info("쿠키 값(value) : " + value);
 			}
        }
-        
-        
-		
-		// -------------------------------------------------
     	model.addAttribute("board",service.get(bno));		
 	}
 	

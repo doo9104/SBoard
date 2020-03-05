@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SBoard.mapper.CommentMapper">
+
+<insert id="insert">
+insert into tbl_comment (cno, bno, ccomment, cwriter)
+values (seq_comment.nextval,#{bno},#{ccomment},#{cwriter})
+</insert>
+
+
+<select id="read" resultType="com.SBoard.mapper.CommentMapper">
+select * from tbl_comment where cno = #{cno}
+</select>
+
+<update id="update">
+update tbl_comment
+set ccomment = #{ccomment}, cupdateregdate = sysdate
+where cno = #{cno}
+</update>
+
+<delete id="delete">
+delete from tbl_comment where cno = #{cno}
+</delete>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
