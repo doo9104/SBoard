@@ -1,6 +1,11 @@
 package com.SBoard.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.SBoard.vo.CommentVO;
+import com.SBoard.vo.SearchDTO;
 
 public interface CommentMapper {
 	
@@ -14,5 +19,9 @@ public interface CommentMapper {
 	public int update(CommentVO vo);
 	
 	// 댓글 삭제 메서드 D
-	public int delete(int cno);
+	public int delete(Long cno);
+	
+	public List<CommentVO> getListPaging(
+			@Param("page") SearchDTO page,
+			@Param("bno") Long bno);
 }

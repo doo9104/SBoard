@@ -8,7 +8,7 @@ values (seq_comment.nextval,#{bno},#{ccomment},#{cwriter})
 </insert>
 
 
-<select id="read" resultType="com.SBoard.mapper.CommentMapper">
+<select id="read" resultType="com.SBoard.vo.CommentVO">
 select * from tbl_comment where cno = #{cno}
 </select>
 
@@ -22,7 +22,12 @@ where cno = #{cno}
 delete from tbl_comment where cno = #{cno}
 </delete>
 
-
+<select id="getListPaging" resultType="com.SBoard.vo.CommentVO">
+select cno,bno,ccomment,cwriter,cregdate,cupdateregdate
+from tbl_comment
+where bno = #{bno}
+order by cno asc
+</select>
 
 
 
