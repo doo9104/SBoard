@@ -8,7 +8,7 @@ public class CommentVO {
 	private Long cno;
 	private Long bno;
 	
-	private String ccomment;
+	private String ccontent;
 	private String cwriter;
 	private Date cregdate;
 	private Date cupdateregdate;

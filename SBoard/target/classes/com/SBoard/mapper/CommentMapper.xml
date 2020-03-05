@@ -3,8 +3,8 @@
 <mapper namespace="com.SBoard.mapper.CommentMapper">
 
 <insert id="insert">
-insert into tbl_comment (cno, bno, ccomment, cwriter)
-values (seq_comment.nextval,#{bno},#{ccomment},#{cwriter})
+insert into tbl_comment (cno, bno, ccontent, cwriter)
+values (seq_comment.nextval, #{bno}, #{ccontent}, #{cwriter})
 </insert>
 
 
@@ -14,7 +14,7 @@ select * from tbl_comment where cno = #{cno}
 
 <update id="update">
 update tbl_comment
-set ccomment = #{ccomment}, cupdateregdate = sysdate
+set ccontent = #{ccontent}, cupdateregdate = sysdate
 where cno = #{cno}
 </update>
 
@@ -23,7 +23,7 @@ delete from tbl_comment where cno = #{cno}
 </delete>
 
 <select id="getListPaging" resultType="com.SBoard.vo.CommentVO">
-select cno,bno,ccomment,cwriter,cregdate,cupdateregdate
+select cno,bno,ccontent,cwriter,cregdate,cupdateregdate
 from tbl_comment
 where bno = #{bno}
 order by cno asc

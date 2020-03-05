@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.CommentVO;
 import com.SBoard.vo.SearchDTO;
 
@@ -13,15 +14,15 @@ public interface CommentMapper {
 	public int insert(CommentVO vo);
 	
 	// 댓글 조회 메서드 R
-	public CommentVO read(Long bno);
+	public CommentVO read(Long cno);
 	
 	// 댓글 수정 메서드 U
 	public int update(CommentVO vo);
 	
 	// 댓글 삭제 메서드 D
-	public int delete(Long cno);
+	public int delete(Long bno);
 	
 	public List<CommentVO> getListPaging(
-			@Param("page") SearchDTO page,
+			@Param("page") BoardPageVO pageN,
 			@Param("bno") Long bno);
 }
