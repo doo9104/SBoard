@@ -3,20 +3,19 @@ package com.SBoard.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.SBoard.mapper.CommentMapper;
 import com.SBoard.vo.CommentVO;
 import com.SBoard.vo.SearchDTO;
 
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
+@AllArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
-	@Setter(onMethod_ = @Autowired)
 	private CommentMapper mapper;
 	
 	@Override
