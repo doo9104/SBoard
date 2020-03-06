@@ -9,7 +9,7 @@
 
 
 <p/>
-
+<div class="col-lg-12" style="border-style:solid;border-radius: 15px;border-color:#E9ECEF;margin-top:30px;margin-bottom:30px;">
   <fieldset>
     <legend>글 조회</legend>
     <div class="form-group">
@@ -26,7 +26,7 @@
     </div>
     <button data-oper='modify' class="btn btn-outline-primary">글 수정</button>
     <button data-oper='list' class="btn btn-primary">목록</button>
-  </fieldset>
+  </fieldset></p>	
 	
 	
 	
@@ -37,18 +37,21 @@
 		<input type='hidden' name='keyword' value='<c:out value="${page.keyword }"/>'>
 		<input type='hidden' name='searchType' value='<c:out value="${page.searchType }"/>'>
 	</form>
-				
+</div>	
+<!-- ------------------------------------------------------------------------------------------------- -->
+<!-- Comment -->
+<div class="col-lg-12" style="border-style:solid;border-radius: 15px;border-color:#E9ECEF;margin-top:30px;margin-bottom:30px;">
+<%@include file="comment.jsp" %>
+</div> <!-- comment end -->
 
-
-
+<!-- ------------------------------------------------------------------------------------------------ -->
 <script type="text/javascript" src="/resources/js/comment.js"></script>
 
 
 <script>
-console.log("=========");
-console.log("JS TEST");
 
-var bnoValue = '<c:out value="${board.bno}"/>'
+
+
 
 // 댓글 등록
 /* CommentService.add(
@@ -67,7 +70,8 @@ var bnoValue = '<c:out value="${board.bno}"/>'
 	}
 }); */
 
-CommentService.remove(12, function(count) {
+// 댓글 삭제
+/* CommentService.remove(12, function(count) {
 	
 	console.log(count);
 	
@@ -76,10 +80,16 @@ CommentService.remove(12, function(count) {
 	}
 }, function(err) {
 	alert("ERROR");
+}); */
+
+/* CommentService.update({
+	cno : 11,
+	bno : bnoValue,
+	ccontent : "댓글 수정"
+}, function(result) {
+	alert("수정완료");
 });
-
-
-
+ */
 </script>
 
 
