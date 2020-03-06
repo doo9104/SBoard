@@ -41,6 +41,49 @@
 
 
 
+<script type="text/javascript" src="/resources/js/comment.js"></script>
+
+
+<script>
+console.log("=========");
+console.log("JS TEST");
+
+var bnoValue = '<c:out value="${board.bno}"/>'
+
+// 댓글 등록
+/* CommentService.add(
+		{ccontent:"JS TEST", cwriter:"noob", bno:bnoValue}
+		,
+		function(result) {
+			alert("RESULT : " + result);
+		}
+); */
+
+// 댓글 가져오기
+/* CommentService.getList({bno:bnoValue, page:1}, function(list) {
+	
+	for(var i=0, len=list.length||0; i<len;i++){
+		console.log(list[i]);
+	}
+}); */
+
+CommentService.remove(12, function(count) {
+	
+	console.log(count);
+	
+	if(count === "success") {
+		alert("REMOVED");
+	}
+}, function(err) {
+	alert("ERROR");
+});
+
+
+
+</script>
+
+
+
 <!-- 스크립트 시작  -->
 <script type="text/javascript">
 $(document).ready(function() {
