@@ -3,7 +3,6 @@ var CommentService = (function() {
 
 	function add(ccontent, callback, error) {
 		console.log("add comment...");
-	
 	$.ajax({
 		type : 'post',
 		url : '/comments/new',
@@ -19,7 +18,7 @@ var CommentService = (function() {
 				error(er);
 			}
 		}	
-	});
+	})
 	}
 	
 	

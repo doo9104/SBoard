@@ -26,7 +26,7 @@
     </div>
     <button data-oper='modify' class="btn btn-outline-primary">글 수정</button>
     <button data-oper='list' class="btn btn-primary">목록</button>
-  </fieldset></p>	
+  </fieldset><p/>	
 	
 	
 	
@@ -51,16 +51,16 @@
 <script>
 
 
-
+var bnoValue = '<c:out value="${board.bno}"/>';
 
 // 댓글 등록
-/* CommentService.add(
-		{ccontent:"JS TEST", cwriter:"noob", bno:bnoValue}
+/*  CommentService.add(
+		{ccontent:"댓글테스트", cwriter:"noob", bno:bnoValue}
 		,
 		function(result) {
 			alert("RESULT : " + result);
 		}
-); */
+);  */
 
 // 댓글 가져오기
 /* CommentService.getList({bno:bnoValue, page:1}, function(list) {
