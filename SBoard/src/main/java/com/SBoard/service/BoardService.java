@@ -24,4 +24,5 @@ public interface BoardService {
 	
 	// 조회수 증가
 	public void updateHit(Long bno);
+
 }

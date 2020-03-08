@@ -42,7 +42,8 @@ public class BoardController {
 		log.info("list " + page);
 		
 		model.addAttribute("list",service.getList(page));
-
+	
+	
 		int total = service.totalCount(page);
 		model.addAttribute("pageMaker", new PageDTO(page,total));
 	}

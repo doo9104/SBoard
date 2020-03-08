@@ -22,7 +22,12 @@ public interface CommentMapper {
 	// 댓글 삭제 메서드 D
 	public int delete(Long bno);
 	
-	public List<CommentVO> getListPaging(
+	// 댓글 리스트 가져오기
+	public List<CommentVO> getList(
 			@Param("page") BoardPageVO pageN,
 			@Param("bno") Long bno);
+
+	
+
+
 }

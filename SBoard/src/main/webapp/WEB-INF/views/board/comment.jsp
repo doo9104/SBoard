@@ -53,6 +53,7 @@
 <script>
 $(document).ready(function() {
 	
+
 	var bnoValue = '<c:out value="${board.bno}"/>';
 	var replyUL = $("#comment");
 		
@@ -66,7 +67,7 @@ $(document).ready(function() {
 				replyUL.html("");
 				return;
 			}
-			 
+			
 			for(var i = 0, len = list.length || 0; i< len; i++) {
 				str += "<div class='media comment-box' data-cno='"+list[i].cno+"'><div class='media-left'><a href='#'><img class='img-responsive user-photo' src='/resources/img/avatar.png'></a></div>";
 				str += "<div class='media-body'><small class='pull-right text-muted'>"+CommentService.displayTime(list[i].cregdate)+"</small><h4 class='media-heading'>"+list[i].cwriter+"</h4>";
@@ -99,6 +100,18 @@ $(document).ready(function() {
 	
 	
 	
+	$("#comment").on("click", "#test", function(e) {
+		var cno = $(this).data("cno");
+		console.log(cno);
+	});
+	
+	
+	
+	
+	
+	
+	
+		
 });
 </script>
 

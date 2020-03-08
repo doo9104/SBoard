@@ -35,5 +35,7 @@ public interface BoardMapper {
 	// 조회수 증가 메서드
 	void updateHit(Long bno);
 	
+
+	
 }
 

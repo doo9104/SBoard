@@ -22,7 +22,7 @@ where cno = #{cno}
 delete from tbl_comment where cno = #{cno}
 </delete>
 
-<select id="getListPaging" resultType="com.SBoard.vo.CommentVO">
+<select id="getList" resultType="com.SBoard.vo.CommentVO">
 select cno,bno,ccontent,cwriter,cregdate,cupdateregdate
 from tbl_comment
 where bno = #{bno}
@@ -30,6 +30,20 @@ order by cno asc
 </select>
 
 
+<select id="getListPaging" resultType="com.SBoard.vo.CommentVO">
+<![CDATA[
+select cno, bno, ccontent, cwriter, cregdate, cupdateregdate
+from
+	(
+	select /*+INDEX(tbl_comment idx_comment) */
+    rownum rn, cno, bno, ccontent, cwriter, cregdate, cupdateregdate
+	from tbl_comment
+	where bno=121
+	and cno > 0
+	and rownum <= #{page.pageNum} * #{page.amount}
+) where rn > (#{page.pageNum}-1) * #{page.amount}
+]]>
+</select>
 
 
 

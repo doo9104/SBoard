@@ -62,5 +62,7 @@ public class BoardServiceImpl implements BoardService {
 		this.mapper.updateHit(bno);
 	}
 	
+	
+	
 
 }

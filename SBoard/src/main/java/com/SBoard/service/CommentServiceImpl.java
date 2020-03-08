@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.SBoard.mapper.CommentMapper;
 import com.SBoard.vo.BoardPageVO;
+import com.SBoard.vo.CommentPageDTO;
 import com.SBoard.vo.CommentVO;
-import com.SBoard.vo.SearchDTO;
+
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -51,7 +52,19 @@ public class CommentServiceImpl implements CommentService {
 	public List<CommentVO> getList(BoardPageVO pageN, Long bno) {
 
 		log.info("get comment list " + bno);
-		return mapper.getListPaging(pageN, bno);
+		return mapper.getList(pageN, bno);
 	}
-
+	
+	/*
+	 * @Override public CommentPageDTO getListPage(BoardPageVO pageN, Long bno) {
+	 * 
+	 * log.info("get comment list page"); return new CommentPageDTO(
+	 * mapper.totalCount(bno), mapper.getListPaging(pageN, bno)); }
+	 */
+	
+	
+	
+	
+	
+	
 }

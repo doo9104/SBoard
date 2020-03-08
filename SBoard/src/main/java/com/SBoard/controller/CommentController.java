@@ -60,6 +60,9 @@ public class CommentController {
 	public ResponseEntity<List<CommentVO>> getList(
 		@PathVariable("page") int page,
 		@PathVariable("bno") Long bno) {
+		
+		
+		
 	
 	log.info("getList......");
 	BoardPageVO pageN = new BoardPageVO(page,10);

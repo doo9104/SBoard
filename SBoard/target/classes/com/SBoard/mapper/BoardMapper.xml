@@ -23,6 +23,8 @@ values (seq_board.nextval,#{btitle},#{bcontent},#{bwriter}) -->
 Modal 전송할 때 result 값에 bno가 제대로 전달이 안되서 수정 -->
 </insert>
 
+<!-- select * from tbl_board where bno = #{bno} -->
+<!-- select bno,btitle,bcontent,bwriter,bhit,brec_up,brec_dn,bregdate,bupdateregdate,(select count(cno) from tbl_comment where bno=#{bno})commentCnt from tbl_board where bno = #{bno} -->
 <select id="read" resultType="com.SBoard.vo.BoardVO">
 select * from tbl_board where bno = #{bno}
 </select>
@@ -79,13 +81,12 @@ select count(*) from tbl_board where bno > 0
 </if>
 </sql>
 
-
+<!-- 조회수 증가 -->
 <update id="updateHit">
 update tbl_board
 set bhit = bhit + 1
 where bno = #{bno}
 </update>
-
 
 
 </mapper>
