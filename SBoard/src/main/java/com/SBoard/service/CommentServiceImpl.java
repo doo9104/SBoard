@@ -9,7 +9,6 @@ import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.CommentPageDTO;
 import com.SBoard.vo.CommentVO;
 
-
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -19,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 public class CommentServiceImpl implements CommentService {
 
 	private CommentMapper mapper;
-	
+
 	@Override
 	public int register(CommentVO vo) {
 
@@ -43,7 +42,7 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public int remove(Long cno) {
-		
+
 		log.info("remove.." + cno);
 		return mapper.delete(cno);
 	}
@@ -54,17 +53,17 @@ public class CommentServiceImpl implements CommentService {
 		log.info("get comment list " + bno);
 		return mapper.getList(pageN, bno);
 	}
+
 	
-	/*
-	 * @Override public CommentPageDTO getListPage(BoardPageVO pageN, Long bno) {
-	 * 
-	 * log.info("get comment list page"); return new CommentPageDTO(
-	 * mapper.totalCount(bno), mapper.getListPaging(pageN, bno)); }
-	 */
-	
-	
-	
-	
-	
-	
+	 @Override 
+	 public CommentPageDTO getListPage(BoardPageVO pageN, Long bno) {
+	  
+		 log.info("get comment list page"); 
+	  
+		  return new CommentPageDTO(
+		  mapper.getCountByBno(bno), 
+		  mapper.getListPaging(pageN, bno)); 
+	 }
+	 
+
 }

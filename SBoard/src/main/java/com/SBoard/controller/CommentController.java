@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.SBoard.service.CommentService;
 import com.SBoard.vo.BoardPageVO;
+import com.SBoard.vo.CommentPageDTO;
 import com.SBoard.vo.CommentVO;
 import com.SBoard.vo.SearchDTO;
 
@@ -29,6 +30,9 @@ import lombok.extern.log4j.Log4j;
 public class CommentController {
 	
 	private CommentService service;
+	
+	
+	
 	
 	
 	// REST 방식으로 처리할 때 외부에서 서버를 호출할때와 서버에서 보내주는 데이터의 타입을 명확히 해야한다.
@@ -53,25 +57,41 @@ public class CommentController {
 
 	
 	
+	/*
+	 * @GetMapping(value = "/pages/{bno}/{page}", produces = {
+	 * MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+	 * public ResponseEntity<List<CommentVO>> getList(
+	 * 
+	 * @PathVariable("page") int page,
+	 * 
+	 * @PathVariable("bno") Long bno) {
+	 * 
+	 * 
+	 * 
+	 * 
+	 * log.info("getList......"); BoardPageVO pageN = new BoardPageVO(page,10);
+	 * log.info(pageN); return new ResponseEntity<>(service.getList(pageN, bno),
+	 * HttpStatus.OK); // getList() 는 BoardPageVO를 이용해서 파라미터를 수집한다. // 게시물의
+	 * 번호는 @PathVariable를 이용해서 파라미터로 처리한다. }
+	 */
 	@GetMapping(value = "/pages/{bno}/{page}",
-		produces = {
-				MediaType.APPLICATION_XML_VALUE,
-				MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<CommentVO>> getList(
-		@PathVariable("page") int page,
-		@PathVariable("bno") Long bno) {
+			produces = {
+					MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_JSON_UTF8_VALUE })
+		public ResponseEntity<CommentPageDTO> getList(
+			@PathVariable("page") int page,
+			@PathVariable("bno") Long bno) {
+			
+			
+			
 		
-		
-		
-	
-	log.info("getList......");
-	BoardPageVO pageN = new BoardPageVO(page,10);
-	log.info(pageN);
-	return new ResponseEntity<>(service.getList(pageN, bno), HttpStatus.OK);
-	// getList() 는 BoardPageVO를 이용해서 파라미터를 수집한다.
-	// 게시물의 번호는 @PathVariable를 이용해서 파라미터로 처리한다.
-}
-
+		log.info("getList......");
+		BoardPageVO pageN = new BoardPageVO(page,10);
+		log.info(pageN);
+		return new ResponseEntity<>(service.getListPage(pageN, bno), HttpStatus.OK);
+		// getList() 는 BoardPageVO를 이용해서 파라미터를 수집한다.
+		// 게시물의 번호는 @PathVariable를 이용해서 파라미터로 처리한다.
+	}
 
 	// 댓글 조회
 	@GetMapping(value = "/{cno}",

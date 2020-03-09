@@ -23,21 +23,21 @@ var CommentService = (function() {
 	
 	
 	function getList(param, callback, error) {
-	
+		
 		var bno = param.bno;
 		var page = param.page || 1;
-		
 		$.getJSON("/comments/pages/" + bno + "/" + page + ".json",
 				function(data) {
 					if (callback) {
-						callback(data);
-					}
+						//callback(data); // 댓글만 가져올경우
+						callback(data.commentCount, data.list);
+						}
 		}).fail(function(xhr, status, err) {
 		if (error) {
 			error();
 			}
 		});
-	}
+	}	
 	
 	
 	function remove(cno, callback, error) {

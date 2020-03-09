@@ -27,6 +27,11 @@ public interface CommentMapper {
 			@Param("page") BoardPageVO pageN,
 			@Param("bno") Long bno);
 
+	public List<CommentVO> getListPaging(
+			@Param("page") BoardPageVO pageN,
+			@Param("bno") Long bno);
+			
+	public int getCountByBno(Long bno);
 	
 
 

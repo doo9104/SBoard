@@ -17,9 +17,9 @@ public interface CommentService {
 	
 	public int remove(Long cno);
 	
-	public List<CommentVO> getList(BoardPageVO pageN, Long bno);
+	 public List<CommentVO> getList(BoardPageVO pageN, Long bno); 
 	
-	/* public CommentPageDTO getListPage(BoardPageVO pageN, Long bno); */
+	public CommentPageDTO getListPage(BoardPageVO pageN, Long bno);
 	
 
 }

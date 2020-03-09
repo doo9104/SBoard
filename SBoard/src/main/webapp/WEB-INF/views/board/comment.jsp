@@ -44,7 +44,12 @@
             </div>
         </div>  
 </div>
+<button type="button" id="moreCmt" class="btn btn-primary btn-lg">더보기</button>
+<!-- 댓글 페이징 -->
+<div class="panel-footer">
 
+</div>
+<!-- 댓글 페이징 끝 -->
 
 
 <script type="text/javascript" src="/resources/js/comment.js"></script>
@@ -56,15 +61,43 @@ $(document).ready(function() {
 
 	var bnoValue = '<c:out value="${board.bno}"/>';
 	var replyUL = $("#comment");
-		
+	var scrollCount = 1;
+	var str = "";
+	var a = 1;
+	
 	showList(1);
+	console.log("scrollCount : " + scrollCount);
 	
 	function showList(page) {
+		console.log("page : " + page);
 		
-		CommentService.getList({bno:bnoValue,page: page|| 1},function(list) {
-			var str = "";
-			if(list == null || list.length == 0){
+		CommentService.getList({bno:bnoValue,page: page|| 1},
+			function(commentCount, list) {
+			console.log("commentCount : " + commentCount);
+			console.log("list : " + list);
+			console.log(list);
+			
+			/* a = 총 페이지수 */
+			a = Math.ceil(commentCount/10);
+			console.log("a : " + a);
+			
+			if(page == -1){
 				replyUL.html("");
+				str = "";
+				for(i = 1; i <= a ; i++){
+					console.log("i : " + i);
+					showList(i);		
+				}
+				scrollCount = a;
+				return;
+			}
+			
+			
+			
+			/* var str = ""; */
+			
+			if(list == null || list.length == 0){
+				/* replyUL.html(""); */
 				return;
 			}
 			
@@ -75,8 +108,12 @@ $(document).ready(function() {
 			}
 			
 			replyUL.html(str);
+			
 		});
 	} /* showList 끝 */
+	
+	
+	
 	
 	
 	
@@ -90,12 +127,23 @@ $(document).ready(function() {
 				cwriter : $("#cwriter").val(),
 				bno : bnoValue
 		};
-		CommentService.add(comment, function(result) {
+		
+		
+		/* if(scrollCount > 1){
+			for(i = scrollCount; i <= a ; i++){
+				console.log("i : " + i);
+				showList(i);
+			}
+		} */
+		
+		
+		  CommentService.add(comment, function(result) {
 			$("#ccontent").val("");
 			$("#cwriter").val("");
-			showList(1);
-			alert(result);
-		});
+			alert("등록되었습니다.");
+			showList(-1);
+		});  
+		
 	});
 	
 	
@@ -107,10 +155,35 @@ $(document).ready(function() {
 	
 	
 	
+	$('#moreCmt').click(function(){
+		scrollCount++;
+		console.log("더 보기 클릭 scrollCount : " + scrollCount);
+		loadCmt();
+	});
+ 
 	
-	
-	
-	
+ 
+	function loadCmt() {
+		CommentService.getList({bno:bnoValue,page: scrollCount},
+			function(commentCount, list) {
+				if(scrollCount > (Math.ceil(commentCount/10))){
+					alert("마지막 댓글입니다.");
+					scrollCount--;
+					console.log("scrollCount가 줄어들었음 : " + scrollCount);
+					return;
+				} else {
+					console.log("더보기함수 scrollCount : " + scrollCount)
+				for(var i = 0, len = list.length || 0; i< len; i++) {
+					str += "<div class='media comment-box' data-cno='"+list[i].cno+"'><div class='media-left'><a href='#'><img class='img-responsive user-photo' src='/resources/img/avatar.png'></a></div>";
+					str += "<div class='media-body'><small class='pull-right text-muted'>"+CommentService.displayTime(list[i].cregdate)+"</small><h4 class='media-heading'>"+list[i].cwriter+"</h4>";
+					str += "<p>"+list[i].ccontent+"</p></div></div>";
+				}
+				}
+			replyUL.html(str);
+		});
+		
+	}
+ 
 		
 });
 </script>
