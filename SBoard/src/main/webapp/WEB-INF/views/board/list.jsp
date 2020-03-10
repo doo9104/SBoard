@@ -20,7 +20,7 @@
   <c:forEach items="${list}" var="board">
   <tr>
   <td><c:out value="${board.bno}" /></td>
-  <td><a class='move' href='<c:out value="${board.bno}"/>'><c:out value="${board.btitle}" /></a><small>[0]</small></td>
+  <td><a class='move' href='<c:out value="${board.bno}"/>'><c:out value="${board.btitle}" /></a><small> [<c:out value="${board.commentCnt}"/>]</small></td>
   <td><c:out value="${board.bwriter}" /></td>
   <td><c:out value="${board.bhit}" /></td>
   <td><c:out value="${board.brec_up}" /></td>

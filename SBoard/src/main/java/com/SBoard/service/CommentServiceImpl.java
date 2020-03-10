@@ -2,27 +2,39 @@ package com.SBoard.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.SBoard.mapper.BoardMapper;
 import com.SBoard.mapper.CommentMapper;
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.CommentPageDTO;
 import com.SBoard.vo.CommentVO;
 
-import lombok.AllArgsConstructor;
+
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
-@AllArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
-	private CommentMapper mapper;
 
+	@Setter(onMethod_ = @Autowired)
+	private CommentMapper mapper;
+	
+	@Setter(onMethod_ = @Autowired)
+	private BoardMapper boardMapper;
+	
+	@Transactional
 	@Override
 	public int register(CommentVO vo) {
 
 		log.info("register.." + vo);
+		
+		boardMapper.updateCommentCnt(vo.getBno(), 1);
+		
 		return mapper.insert(vo);
 	}
 
@@ -40,10 +52,15 @@ public class CommentServiceImpl implements CommentService {
 		return mapper.update(vo);
 	}
 
+	@Transactional
 	@Override
 	public int remove(Long cno) {
 
 		log.info("remove.." + cno);
+		
+		CommentVO vo = mapper.read(cno);
+		
+		boardMapper.updateCommentCnt(vo.getBno(), -1);
 		return mapper.delete(cno);
 	}
 
