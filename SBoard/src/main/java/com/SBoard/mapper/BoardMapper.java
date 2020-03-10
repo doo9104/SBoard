@@ -2,6 +2,8 @@ package com.SBoard.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
 import com.SBoard.vo.SearchDTO;
@@ -34,6 +36,9 @@ public interface BoardMapper {
 	
 	// 조회수 증가 메서드
 	void updateHit(Long bno);
+	
+	// 댓글 수
+	public void updateCommentCnt(@Param("bno") Long bno, @Param("amount") int amount);
 	
 
 	

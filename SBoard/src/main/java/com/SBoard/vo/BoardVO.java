@@ -16,4 +16,5 @@ public class BoardVO {
 	private long brec_dn;
 	private Date bregdate;
 	private Date bupdateregdate;
+	private int commentCnt;
 }
