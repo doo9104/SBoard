@@ -122,7 +122,7 @@ $(document).ready(function(e){
 			dataType:'json',
 			success: function(result){
 				console.log(result);
-				//showUploadResult(result);
+				showUploadResult(result);
 			}
 	}); // $.ajax
 	});
