@@ -98,6 +98,27 @@ var bnoValue = '<c:out value="${board.bno}"/>';
 <script type="text/javascript">
 $(document).ready(function() {
 	
+	
+	ClassicEditor
+	.create( document.querySelector( '#bcontent' ), {	
+		
+		
+
+		
+		
+	} )
+	.then( editor => {
+			editor.isReadOnly = true;
+	        console.log( editor );
+	} )
+	.catch( error => {
+	        console.error( error );
+	} );
+	
+	
+	
+	
+	
 	var operForm = $("#operForm");
 	
 	$("button[data-oper='modify']").on("click", function(e) {
@@ -116,21 +137,7 @@ $(document).ready(function() {
 
 
 
-ClassicEditor
-.create( document.querySelector( '#bcontent' ), {	
-	
-	
 
-	
-	
-} )
-.then( editor => {
-		editor.isReadOnly = true;
-        console.log( editor );
-} )
-.catch( error => {
-        console.error( error );
-} );
 
 </script>
 
