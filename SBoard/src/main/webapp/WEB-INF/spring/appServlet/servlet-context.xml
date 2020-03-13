@@ -21,7 +21,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	
+	<!-- 메세지 국제화 -->
+	<interceptors> 
+		<beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"> 
+			<beans:property name="paramName" value="lang" /> 
+		</beans:bean> 
+	</interceptors>
+
+
 	
 	<context:component-scan base-package="com.SBoard.controller" />
 	

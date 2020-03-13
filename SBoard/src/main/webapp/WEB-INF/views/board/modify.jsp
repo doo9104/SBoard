@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <%@include file="../includes/header.jsp" %>
 <script src="/resources/js/ckeditor.js"></script>
@@ -14,18 +15,18 @@
 		<input type='hidden' name='searchType' value='<c:out value="${page.searchType }"/>'>
 
   <fieldset>
-    <legend>글 수정</legend>
+    <legend><spring:message code="modify.text" /></legend>
     
     <div class="form-group">
-      <label for="btitle">제목</label>
+      <label for="btitle"><spring:message code="title" /></label>
       <input class="form-control" id="btitle" name='btitle'  value='<c:out value="${board.btitle}"/>'>
     </div>
     <div class="form-group">
-      <label for="bcontent">내용</label>
+      <label for="bcontent"><spring:message code="content" /></label>
       <textarea class="form-control" id="bcontent" name='bcontent' rows="10"><c:out value="${board.bcontent}"/></textarea>
     </div>
     <div class="form-group">
-      <label for="bwriter">작성자</label>
+      <label for="bwriter"><spring:message code="writer" /></label>
       <input class="form-control" id="bwriter" name='bwriter' readonly=""  value='<c:out value="${board.bwriter}"/>'>
     </div>
     <!-- 수집용 -->
@@ -39,9 +40,9 @@
       <input class="form-control" id="bno" name='bno'  value='<c:out value="${board.bno}"/>'>
     </div>
     
-    <button data-oper='modify' type="submit" class="btn btn-outline-primary">수정</button>
-    <button data-oper='remove' type="submit" class="btn btn-danger">삭제</button>
-    <button data-oper='list' type="submit" class="btn btn-primary">목록</button>
+    <button data-oper='modify' type="submit" class="btn btn-outline-primary"><spring:message code="modify.modifybutton" /></button>
+    <button data-oper='remove' type="submit" class="btn btn-danger"><spring:message code="modify.removebutton" /></button>
+    <button data-oper='list' type="submit" class="btn btn-primary"><spring:message code="modify.listbutton" /></button>
     
   </fieldset>
 </form>

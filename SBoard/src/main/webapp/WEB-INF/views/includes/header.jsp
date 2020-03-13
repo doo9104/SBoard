@@ -1,9 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>SBoard</title>
+<title><spring:message code="site.title" text="SBoard" /></title>
 
 <!-- <link href="/resources/css/bootstrap-min.css" rel="stylesheet" type="text/css"> -->
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css">
@@ -34,21 +36,41 @@
         <a class="nav-link" href="#">About</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" id="korean" class="btn btn-secondary">한국어</button>
+  <button type="button" id="english" class="btn btn-secondary">English</button>
+  <button type="button" id="japanese"class="btn btn-secondary">日本語</button>
+</div>
+    <!-- <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
       <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    </form> -->
   </div>
 </nav>
 <!-- 네비게이션 바 끝 -->  
             
-            
-            
-<!-- 메인 컨텐츠 시작 -->
-<div class="container"> <!-- 가-1 -->
-
 <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous">
+</script> 
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+$("#korean").on("click", function() {	
+	location.href='/board/list?lang=ko';
+});
+$("#english").on("click", function() {	
+	location.href='/board/list?lang=en';
+});
+$("#japanese").on("click", function() {	
+	location.href='/board/list?lang=jp';
+});
+
+}); /* 도큐먼트 레디 괄호 */
 </script>
+
+            
+<!-- 메인 컨텐츠 시작 -->
+<div class="container"> <!-- 가-1 -->

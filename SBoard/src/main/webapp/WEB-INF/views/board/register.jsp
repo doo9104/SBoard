@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <%@include file="../includes/header.jsp" %>
 <script src="/resources/js/ckeditor.js"></script>
@@ -10,19 +11,19 @@
 <p/>
 <form role="form" action="/board/register" method="post">
   <fieldset>
-    <legend>글 작성</legend>
+    <legend><spring:message code="write.text" /></legend>
     <div class="form-group">
-      <label for="btitle">제목</label>
+      <label for="btitle"><spring:message code="title" /></label>
       <input class="form-control" id="btitle" name='btitle'/>
     </div>
     <div class="form-group">
-      <label for="bcontent">내용</label>
+      <label for="bcontent"><spring:message code="content" /></label>
       <textarea class="form-control" id="bcontent" name='bcontent' rows="10"></textarea>
     </div>
     <div class="form-group uploadDiv">
-      <label for="exampleInputFile">첨부파일 등록</label>
+      <label for="exampleInputFile"><spring:message code="write.file1" /></label>
       <input type="file" class="form-control-file" name='uploadFile' id="exampleInputFile" multiple aria-describedby="fileHelp"></input>
-      <small id="fileHelp" class="form-text text-muted">첨부할 파일을 선택해주세요.</small>
+      <small id="fileHelp" class="form-text text-muted"><spring:message code="write.file3" /></small>
     </div>
     <!-- 첨부된 파일의 결과를 처리하는 DIV-->
     <div class='uploadResult'>
@@ -32,10 +33,10 @@
     <!-- 첨부된 파일의 결과를 처리하는 DIV-->
  
     <div class="form-group">
-      <label for="bwriter">작성자</label>
+      <label for="bwriter"><spring:message code="writer" /></label>
       <input class="form-control" id="bwriter" name='bwriter'></input>
     </div>   
-    <button type="submit" class="btn btn-primary">글작성</button>
+    <button type="submit" class="btn btn-primary"><spring:message code="write.button" /></button>
   </fieldset>
 </form>
 

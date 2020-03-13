@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
 <link href="/resources/css/commentStyles.css" rel="stylesheet" type="text/css">
 <p/>
 
@@ -10,7 +12,7 @@
 <p/>
 <div class="input-group mb-3">
   <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon1">작성자</span>
+    <span class="input-group-text" id="basic-addon1"><spring:message code="writer" /></span>
   </div>
   <input type="text" class="form-control" id="cwriter" name="cwriter">
   <input type="hidden" name="cregdate">
@@ -20,7 +22,7 @@
 <div class="input-group mb-3">
   <textarea class="form-control" rows="3" id="ccontent" name="ccontent"></textarea>
   <div class="input-group-append">
-    <button data-oper='register' class="btn btn-outline-secondary" type="button" id="register">등록</button>
+    <button data-oper='register' class="btn btn-outline-secondary" type="button" id="register"><spring:message code="comment.button" /></button>
   </div>
 </div>
 
@@ -44,7 +46,7 @@
             </div>
         </div>  
 </div>
-<button type="button" id="moreCmt" class="btn btn-primary btn-lg">더보기</button>
+<button type="button" id="moreCmt" class="btn btn-primary btn-lg"><spring:message code="comment.more" /></button>
 <!-- 댓글 페이징 -->
 <div class="panel-footer">
 

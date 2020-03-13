@@ -1,19 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <%@include file="../includes/header.jsp" %>
-
 	<!-- 테이블 시작 style="border-style:solid;" -->
   <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">글번호</th>
-      <th scope="col">제목</th>
-      <th scope="col">작성자</th>
-      <th scope="col">조회수</th>
-      <th scope="col">추천</th>
-      <th scope="col">작성일</th>
+      <th scope="col"><spring:message code="board.no" /></th>
+      <th scope="col"><spring:message code="title" /></th>
+      <th scope="col"><spring:message code="writer" /></th>
+      <th scope="col"><spring:message code="board.hit" /></th>
+      <th scope="col"><spring:message code="board.rec" /></th>
+      <th scope="col"><spring:message code="board.regdate" /></th>
     </tr>
   </thead>
   <tbody>
@@ -35,7 +35,7 @@
 <div class="container">
   <div class="row">  <!-- 가1 -->
     <div class="col"> <!-- 가2 -->
-      <button type="button" onclick="location.href='register'" class="btn btn-primary">글작성</button>
+      <button type="button" onclick="location.href='register'" class="btn btn-primary"><spring:message code="board.write" /></button>
     </div> <!-- 가2 -->
     <div class="col-md-auto"> <!-- 가3 -->    
 		<!-- 페이지네이션 시작-->
@@ -74,15 +74,15 @@
 	         <span class="fa fa-search"></span>
 	    </span>
 	  </div>
-	  <input name='keyword' type="text" class="form-control" placeholder="검색어 입력" value='<c:out value="${pageMaker.page.keyword}"/>'/>
+	  <input name='keyword' type="text" class="form-control" placeholder='<spring:message code="search.text" />' value='<c:out value="${pageMaker.page.keyword}"/>'/>
 	  <select name='searchType' class="custom-select" style="max-width: 20%;">
-	    <option value="T" <c:out value="${pageMaker.page.searchType eq 'T'?'selected':'' }"/>>제목</option>
-	    <option value="C" <c:out value="${pageMaker.page.searchType eq 'C'?'selected':'' }"/>>내용</option>
-	    <option value="TC" <c:out value="${pageMaker.page.searchType eq 'TC'?'selected':'' }"/>>제목+내용</option>
-	    <option value="W" <c:out value="${pageMaker.page.searchType eq 'W'?'selected':'' }"/>>작성자</option>
+	    <option value="T" <c:out value="${pageMaker.page.searchType eq 'T'?'selected':'' }"/>><spring:message code="search.T" /></option>
+	    <option value="C" <c:out value="${pageMaker.page.searchType eq 'C'?'selected':'' }"/>><spring:message code="search.C" /></option>
+	    <option value="TC" <c:out value="${pageMaker.page.searchType eq 'TC'?'selected':'' }"/>><spring:message code="search.TC" /></option>
+	    <option value="W" <c:out value="${pageMaker.page.searchType eq 'W'?'selected':'' }"/>><spring:message code="search.W" /></option>
 	  </select>
 	  <div class="input-group-append">
-	    <button class="btn btn-outline-secondary">검색</button>
+	    <button class="btn btn-outline-secondary"><spring:message code="search.button" /></button>
 	    <input type='hidden' name='pageNum' value='${pageMaker.page.pageNum}'>
 		<input type='hidden' name='amount' value='${pageMaker.page.amount}'>
 	  </div>
