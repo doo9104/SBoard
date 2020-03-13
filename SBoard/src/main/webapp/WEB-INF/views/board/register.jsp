@@ -25,7 +25,7 @@ padding:10px;
 }
 
 .uploadResult ul li img{
-width:20px;
+width:200px;
 }
 
 
@@ -117,7 +117,10 @@ $(document).ready(function(e){
 				if(!obj.image) {
 					str += "<li><img src='/resources/img/attach.png'>" + obj.fileName + "</li>";
 				}else {
-					str += "<li>" + obj.fileName + "</li>";
+					//str += "<li>" + obj.fileName + "</li>";
+					var fileCallPath = encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid+"_"+obj.fileName);
+					console.log("obj.uploadPath : " + obj.uploadPath);
+					str += "<li><img src='/display?fileName="+fileCallPath+"'></li>";
 				}
 		});
 		uploadResult.append(str);
