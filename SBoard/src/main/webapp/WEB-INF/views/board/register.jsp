@@ -87,6 +87,7 @@ $(document).ready(function(e){
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880; // 5MB
 	
+	// 파일 확장자나 크기 제한 검사
 	function checkExtension(fileName, fileSize){
 		
 		if(fileSize >= maxSize){
@@ -98,7 +99,11 @@ $(document).ready(function(e){
 			alert("해당 확장자의 파일은 업로드 할 수 없습니다.\n[업로드 불가능한 확장자 : exe,sh,zip,alz]");
 			return false;
 		}
+		return true;
 	}
+	
+	
+	
 	
 	$("input[type='file']").change(function(e){
 		
@@ -118,13 +123,15 @@ $(document).ready(function(e){
 	$.ajax({
 		url : '/uploadAjaxAction',
 		processData : false,
-		contentType : false,data:
-			formData,type : 'POST',
-			dataType:'json',
-			success: function(result){
-				console.log(result);
-				showUploadResult(result);
-			}
+		contentType : false,
+		data:formData,
+		type : 'POST',
+		dataType:'json',
+		success: function(result){
+			console.log(result);
+			/* showUploadResult(result); */
+			
+		}
 	}); // $.ajax
 	});
 	
@@ -153,7 +160,7 @@ $(document).ready(function(e){
 				str += "<li><div>";
 				str += "<span> "+obj.fileName+"</span>";
 				str += "<button type='button' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
-				str += "<img src='/resources/img/attach.png'></a>";
+				str += "<a><img src='/resources/img/attach.png'></a>";
 				str += "</div>";
 				str += "</li>";
 				
