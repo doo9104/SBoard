@@ -6,7 +6,30 @@
 
 <%@include file="../includes/header.jsp" %>
 <script src="/resources/js/ckeditor.js"></script>
+<style>
+.uploadResult {
+width:100%;
+background-color:gray;
+}
 
+.uploadResult ul {
+display:flex;
+flex-flow: row;
+justify-content:center;
+align-items:center;
+}
+
+.uploadResult ul li {
+list-style:none;
+padding:10px;
+}
+
+.uploadResult ul li img{
+width:20px;
+}
+
+
+</style>
 
 <p/>
 <form role="form" action="/board/register" method="post">
@@ -84,6 +107,24 @@ $(document).ready(function(e){
 	});
 	
 	
+	// 파일 리스트 보여주기
+	var uploadResult = $(".uploadResult ul");
+	
+	function showUploadedFile(uploadResultArr) {
+		var str = "";
+		$(uploadResultArr).each(
+				function(i, obj) {
+				if(!obj.image) {
+					str += "<li><img src='/resources/img/attach.png'>" + obj.fileName + "</li>";
+				}else {
+					str += "<li>" + obj.fileName + "</li>";
+				}
+		});
+		uploadResult.append(str);
+	}
+	
+	
+	
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880; // 5MB
 	
@@ -129,6 +170,7 @@ $(document).ready(function(e){
 		dataType:'json',
 		success: function(result){
 			console.log(result);
+			showUploadedFile(result)
 			/* showUploadResult(result); */
 			
 		}
