@@ -61,10 +61,15 @@ public class BoardController {
 		// 게시글 등록후 목록화면으로 이동하기 위해 RedirectAttributes를 파라미터로 지정하고 새로 등록된 게시물의 번호를 같이 전달하기 위해 사용
 		log.info("register : " + board);
 		
-		service.register(board);
+		if(board.getAttachList() != null) {
+			board.getAttachList().forEach(attach -> log.info(attach));
+		}
+		
+		
+		// service.register(board);
 		
 		// 일회성으로 데이터를 전달하는 addFlashAttribute를 이용
-		rttr.addFlashAttribute("result", board.getBno());
+		//rttr.addFlashAttribute("result", board.getBno());
 		return "redirect:/board/list";
 	}
 	

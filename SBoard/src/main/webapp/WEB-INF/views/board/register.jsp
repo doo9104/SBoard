@@ -22,10 +22,40 @@ align-items:center;
 .uploadResult ul li {
 list-style:none;
 padding:10px;
+align-content: center;
+text-align: center;
 }
 
 .uploadResult ul li img{
-width:200px;
+width:100px;
+}
+
+.uploadResult ul li span {
+color:white;
+}
+
+.bigPictureWrapper {
+position: absolute;
+display: none;
+justify-content: center;
+align-items: center;
+top:0%;
+width:100%;
+height:100%;
+background-color:gray;
+z-index: 100;
+background:rgba(255,255,255,0.5);
+}
+
+.bigPicture {
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.bigPicture img {
+width:600px;
 }
 
 
@@ -54,7 +84,13 @@ width:200px;
     </ul>
     </div>
     <!-- 첨부된 파일의 결과를 처리하는 DIV-->
- 
+ 	<div class='bigPictureWrapper'>
+ 		<div class='bigPicture'>
+ 		</div>
+ 	</div>
+ 	
+ 	
+ 	
     <div class="form-group">
       <label for="bwriter"><spring:message code="writer" /></label>
       <input class="form-control" id="bwriter" name='bwriter'></input>
@@ -94,7 +130,17 @@ heading: { options: [
 		console.error( error );
 } );
 					
-					
+	// 원본 이미지 보여주기			
+function showImage(fileCallPath) {
+	
+		$(".bigPictureWrapper").css("display","flex").show();
+		
+		$(".bigPicture")
+		.html("<img src='/display?fileName="+encodeURI(fileCallPath)+"'>")
+		.animate({width:'100%',height:'100%'}, 1000);
+}
+
+// 등록버튼
 $(document).ready(function(e){
 
 	var formObj = $("form[role='form']");
@@ -103,6 +149,21 @@ $(document).ready(function(e){
 		
 		e.preventDefault();
 		console.log("submit clicked");
+		
+		var str = "";
+		
+		$(".uploadResult ul li").each(function(i, obj) {
+			
+			var jobj = $(obj);
+			console.dir(jobj);
+			
+			
+			str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+			str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+			str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+			str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>";
+		});
+		formObj.append(str).submit();
 		
 	});
 	
@@ -115,12 +176,21 @@ $(document).ready(function(e){
 		$(uploadResultArr).each(
 				function(i, obj) {
 				if(!obj.image) {
-					str += "<li><img src='/resources/img/attach.png'>" + obj.fileName + "</li>";
+					var fileCallPath = encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName);
+					
+					var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+					
+					/* str += "<li><a href='/download?fileName="+fileCallPath+"'>"+"<img src='/resources/img/attach.png'>" + obj.fileName + "</a></li>"; */
+					str += "<li><div><a href='/download?fileName="+fileCallPath+"'>"+"<img src='/resources/img/attach.png'>"+obj.fileName+"</a>"+"<span data-file=\'"+fileCallPath+"\' data-type='file'> x </span>"+"</div></li>"
 				}else {
-					//str += "<li>" + obj.fileName + "</li>";
 					var fileCallPath = encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid+"_"+obj.fileName);
-					console.log("obj.uploadPath : " + obj.uploadPath);
-					str += "<li><img src='/display?fileName="+fileCallPath+"'></li>";
+					var originPath = obj.uploadPath+ "\\"+obj.uuid +"_"+obj.fileName;
+					originPath = originPath.replace(new RegExp(/\\/g),"/");
+					
+					str += "<li><a href=\"javascript:showImage(\'"+originPath+"\')\">"+
+					"<img src='/display?fileName="+fileCallPath+"'></a>"+
+					"<span data-file=\'"+fileCallPath+"\' data-type='file'> x </span>"+"</li>"
+					/* str += "<li><img src='/display?fileName="+fileCallPath+"'></li>"; */
 				}
 		});
 		uploadResult.append(str);
@@ -173,8 +243,8 @@ $(document).ready(function(e){
 		dataType:'json',
 		success: function(result){
 			console.log(result);
-			showUploadedFile(result)
-			/* showUploadResult(result); */
+			/* showUploadedFile(result) */
+			showUploadResult(result);
 			
 		}
 	}); // $.ajax
@@ -191,9 +261,11 @@ $(document).ready(function(e){
 			if(obj.image){
 				
 				var fileCallPath = encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid +"_"+obj.fileName);
-				str += "<li><div>";
+				str += "<li data-path='"+obj.uploadPath+"'";
+				str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'";
+				str += " ><div>";
 				str += "<span> "+obj.fileName+"</span>";
-				str += "<button type='button' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+				str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
 				str += "<img src='/display?fileName="+fileCallPath+"'>";
 				str += "</div>";
 				str += "</li>";
@@ -202,10 +274,12 @@ $(document).ready(function(e){
 				var fileCallPath = encodeURIComponent( obj.uploadPath+"/"+obj.uuid +"_"+obj.fileName);
 				var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 				
-				str += "<li><div>";
+				str += "<li ";
+				str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' ><div>"
 				str += "<span> "+obj.fileName+"</span>";
-				str += "<button type='button' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
-				str += "<a><img src='/resources/img/attach.png'></a>";
+				str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' "
+				str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+				str += "<img src='/resources/img/attach.png'></a>";
 				str += "</div>";
 				str += "</li>";
 				
@@ -214,11 +288,56 @@ $(document).ready(function(e){
 		uploadUL.append(str);
 	}
 	
+	// X 버튼 클릭시 이미지 삭제
 	$(".uploadResult").on("click", "button", function(e) {
 		console.log("delete file");
+		
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+		
+		var targetLi = $(this).closest("li");
+		
+		$.ajax({
+			url: '/deleteFile',
+			data: {fileName: targetFile, type:type},
+			dataType:'text',
+			type: 'POST',
+				success: function(result) {
+					alert(result);
+					targetLi.remove();
+				}
+		}); // $.ajax
+		
 	});
 	
 
+	// 원본이미지 보여주기 끄기
+	$(".bigPictureWrapper").on("click", function(e) {
+		$(".bigPicture").animate({width:'0%',height:'0%'}, 1000);
+		setTimeout(function() {
+			$('.bigPictureWrapper').hide();
+		},1000);
+	});
+	
+	/* // 이미지 삭제
+	$(".uploadResult").on("click","span", function(e) {
+		
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+		console.log(targetFile);
+		
+		$.ajax({
+			url: '/deleteFile',
+			data: {fileName: targetFile, type:type},
+			dataType:'text',
+			type: 'POST',
+				success: function(result) {
+					alert(result);
+				}
+		}); // $.ajax
+	}) */
+	
+	
 	})
 </script>
 

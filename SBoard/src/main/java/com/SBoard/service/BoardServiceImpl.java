@@ -2,22 +2,30 @@ package com.SBoard.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
 import com.SBoard.vo.SearchDTO;
+import com.SBoard.mapper.BoardAttachMapper;
 import com.SBoard.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Log4j
 @Service // 비즈니스 영역을 담당하는 객체임을 표시하기 위한 어노테이션
-@AllArgsConstructor
 public class BoardServiceImpl implements BoardService {
+	
+	@Setter(onMethod_= @Autowired)
 	private BoardMapper mapper;
+	
+	@Setter(onMethod_= @Autowired)
+	private BoardAttachMapper attachMapper;
 	
 	@Override
 	public void register(BoardVO board) {
