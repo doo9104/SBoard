@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
@@ -27,10 +28,23 @@ public class BoardServiceImpl implements BoardService {
 	@Setter(onMethod_= @Autowired)
 	private BoardAttachMapper attachMapper;
 	
+	@Transactional
 	@Override
 	public void register(BoardVO board) {
 		log.info("게시글 등록" + board);
+		
 		mapper.insert(board);
+		
+		if(board.getAttachList() == null || board.getAttachList().size() <= 0) {
+			return;
+		}
+		
+		board.getAttachList().forEach(attach -> {
+			
+			attach.setBno(board.getBno());
+			attachMapper.insert(attach);
+		});
+		
 		
 	}
 

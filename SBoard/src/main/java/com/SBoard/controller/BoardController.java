@@ -66,10 +66,10 @@ public class BoardController {
 		}
 		
 		
-		// service.register(board);
+		 service.register(board);
 		
-		// 일회성으로 데이터를 전달하는 addFlashAttribute를 이용
-		//rttr.addFlashAttribute("result", board.getBno());
+		 //일회성으로 데이터를 전달하는 addFlashAttribute를 이용
+		rttr.addFlashAttribute("result", board.getBno());
 		return "redirect:/board/list";
 	}
 	
