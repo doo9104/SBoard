@@ -2,6 +2,7 @@ package com.SBoard.service;
 
 import java.util.List;
 
+import com.SBoard.vo.BoardAttachVO;
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
 import com.SBoard.vo.SearchDTO;
@@ -24,5 +25,7 @@ public interface BoardService {
 	
 	// 조회수 증가
 	public void updateHit(Long bno);
+	
+	public List<BoardAttachVO> getAttachList(Long bno);
 
 }

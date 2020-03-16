@@ -18,4 +18,10 @@
 	<select id="findByBno" resultType="com.SBoard.vo.BoardAttachVO">
 	select * from tbl_attach where bno = #{bno}
 	</select>
+	
+	
+	<delete id="deleteAll">
+	delete tbl_attach where bno = #{bno}
+	</delete>
+	
 </mapper>

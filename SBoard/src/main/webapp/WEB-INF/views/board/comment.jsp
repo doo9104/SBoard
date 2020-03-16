@@ -32,7 +32,7 @@
 
 <!-- 댓글 리스트 -->
 <div class="container" id="comment">
-		 <div class="media comment-box" data-cno='11'>
+		 <!-- <div class="media comment-box" data-cno='11'>
             <div class="media-left">
                 <a href="#">
                     <img class="img-responsive user-photo" src="/resources/img/avatar.png">
@@ -44,7 +44,7 @@
                 <p>첫번째 댓글</p>
               
             </div>
-        </div>  
+        </div>   -->
 </div>
 <button type="button" id="moreCmt" class="btn btn-primary btn-lg"><spring:message code="comment.more" /></button>
 <!-- 댓글 페이징 -->

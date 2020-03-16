@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.SBoard.vo.BoardAttachVO;
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
 import com.SBoard.vo.SearchDTO;
@@ -60,9 +61,11 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.update(board) == 1;
 	}
 
+	@Transactional
 	@Override
 	public boolean remove(Long bno) {
 		log.info("글 삭제" + bno);
+		attachMapper.deleteAll(bno);
 		return mapper.delete(bno) == 1;
 	}
 
@@ -84,7 +87,11 @@ public class BoardServiceImpl implements BoardService {
 		this.mapper.updateHit(bno);
 	}
 	
-	
+	@Override
+	public List<BoardAttachVO> getAttachList(Long bno) {
+		log.info("attach list : " + bno);
+		return attachMapper.findByBno(bno);
+	}
 	
 
 }

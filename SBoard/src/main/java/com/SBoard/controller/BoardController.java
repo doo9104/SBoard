@@ -1,20 +1,31 @@
 package com.SBoard.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.SBoard.service.BoardService;
+import com.SBoard.vo.BoardAttachVO;
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
 import com.SBoard.vo.PageDTO;
@@ -165,7 +176,11 @@ public class BoardController {
 	public String remove(@RequestParam("bno") Long bno,@ModelAttribute("page") SearchDTO page, RedirectAttributes rttr) {
 		
 		log.info("remove : " + bno);
+		
+		List<BoardAttachVO> attachList = service.getAttachList(bno);
+		
 		if(service.remove(bno)) {
+			deleteFiles(attachList);
 			rttr.addFlashAttribute("result","success");
 		}
 		/*rttr.addAttribute("pageNum",page.getPageNum());
@@ -175,5 +190,40 @@ public class BoardController {
 		
 		return "redirect:/board/list" + page.makeParam();
 	}
+	
+	@GetMapping(value = "/getAttachList",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno) {
+		log.info("getAttachList : " + bno);
+		
+		return new ResponseEntity<>(service.getAttachList(bno), HttpStatus.OK);
+	}
+			
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+		if(attachList == null || attachList.size() == 0) {
+			return;
+		}
+		
+		log.info("delete attach files...");
+		log.info(attachList);
+		
+		attachList.forEach(attach -> {
+			try {
+				Path file = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\"+attach.getUuid()+"_"+attach.getFileName());
+				
+				Files.deleteIfExists(file);
+				if(Files.probeContentType(file).startsWith("image")) {
+					Path thumbNail = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\s_"+attach.getUuid()+"_"+attach.getFileName());
+				Files.delete(thumbNail);
+			}
+		}catch(Exception e) {
+			log.error("delete file error : " + e.getMessage());
+		}//end catch
+				
+	});//end foreach
+		
+	}
+	
 	
 }
