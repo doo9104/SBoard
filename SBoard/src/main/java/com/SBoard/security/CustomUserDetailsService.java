@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.SBoard.mapper.MemberMapper;
+import com.SBoard.security.vo.CustomUser;
+import com.SBoard.vo.MemberVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -19,6 +21,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		log.warn("Load User By UserName : " + userName);
-		return null;
+		
+		MemberVO vo = memberMapper.read(userName);
+		log.warn("queried by member mapper : " + vo);
+	
+		return vo == null ? null : new CustomUser(vo);
 	}
 }

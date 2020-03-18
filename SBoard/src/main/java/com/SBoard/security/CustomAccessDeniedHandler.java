@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 public class CustomAccessDeniedHandler implements AccessDeniedHandler{
-// 접근 권한 거부에 대한 핸들러
+// 접근 권한 거부 메세지에 대한 핸들러
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessException)
 		throws IOException, ServletException {

@@ -6,31 +6,49 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 <bean id="customAccessDenied" class="com.SBoard.security.CustomAccessDeniedHandler"></bean>
-<bean id="customLoginSuccess" class="com.SBoard.security.CustomLoginSuccessHandler"></bean>
-<bean id="customPasswordEncoder" class="com.SBoard.security.CustomNoOpPasswordEncoder"></bean>
+<!-- <bean id="customLoginSuccess" class="com.SBoard.security.CustomLoginSuccessHandler"></bean> -->
+<!-- <bean id="customPasswordEncoder" class="com.SBoard.security.CustomNoOpPasswordEncoder"></bean> -->
+<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 <bean id="customUserDetailsService" class="com.SBoard.security.CustomUserDetailsService"></bean>
 
 <security:http>
 
+	<security:intercept-url pattern="/board/list" access="permitAll"/>
+	
+	<security:intercept-url pattern="/board/register" access="hasRole('ROLE_MEMBER')"/>
+	
+	
+	
 	<!-- 커스텀 로그인 -->
-	<security:form-login login-page="/customLogin" authentication-success-forward-url="customLoginSuccess"/>
+	<!-- <security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/> -->
+	<security:form-login login-page="/customLogin"/>
 	
 	<!-- 로그아웃 -->
-	<security:logout logout-url="/customLogout" invalidate-session="true"/>
+	<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="JSESSION_ID" />
 		
 	<!-- 접근권한 거부 -->
 	<security:access-denied-handler ref="customAccessDenied"/>	
+	
+	
 
 </security:http>
 
 <security:authentication-manager>
 
 <security:authentication-provider>
+
+	
 	<security:jdbc-user-service
-		data-source-ref="dataSource" />
+		data-source-ref="dataSource"
+		users-by-username-query="select userid,userpw,enabled from tbl_member where userid = ? "
+		authorities-by-username-query="select userid,auth from tbl_member_auth where userid = ? "
+		 />
 		
-	<security:password-encoder
-		ref="customPasswordEncoder" />
+	<!-- <security:password-encoder
+		ref="customPasswordEncoder" /> -->
+		
+		<security:password-encoder
+		ref="bcryptPasswordEncoder" />
 </security:authentication-provider>
 
 </security:authentication-manager>
