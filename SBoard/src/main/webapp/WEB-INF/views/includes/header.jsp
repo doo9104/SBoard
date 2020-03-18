@@ -36,11 +36,26 @@
         <a class="nav-link" href="#">About</a>
       </li>
     </ul>
-    <div class="btn-group" role="group" aria-label="Basic example">
+    <!-- 오른쪽 메뉴 -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-center">
+  		<ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">로그인</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">회원가입</a>
+      </li>
+    </ul>
+	</nav>
+	<!-- 오른쪽 메뉴 끝 -->
+    <a href="" id="korean"><img src="/resources/img/kr.png"></a>
+    <a href="" id="english"><img src="/resources/img/us.png"></a>
+    <a href="" id="japanese"><img src="/resources/img/jp.png"></a>
+  <!--   <div class="btn-group" role="group" aria-label="Basic example">
   <button type="button" id="korean" class="btn btn-secondary">한국어</button>
   <button type="button" id="english" class="btn btn-secondary">English</button>
   <button type="button" id="japanese"class="btn btn-secondary">日本語</button>
-</div>
+</div> -->
     <!-- <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
       <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
@@ -58,13 +73,16 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-$("#korean").on("click", function() {	
+$("#korean").on("click", function(e) {	
+	e.preventDefault();
 	location.href='/board/list?lang=ko';
 });
-$("#english").on("click", function() {	
+$("#english").on("click", function(e) {	
+	e.preventDefault();
 	location.href='/board/list?lang=en';
 });
-$("#japanese").on("click", function() {	
+$("#japanese").on("click", function(e) {	
+	e.preventDefault();
 	location.href='/board/list?lang=jp';
 });
 
