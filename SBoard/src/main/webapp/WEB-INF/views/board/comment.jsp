@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 
 <link href="/resources/css/commentStyles.css" rel="stylesheet" type="text/css">
 <p/>
@@ -16,13 +18,16 @@
   </div>
   <input type="text" class="form-control" id="cwriter" name="cwriter">
   <input type="hidden" name="cregdate">
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </div>
 
 
 <div class="input-group mb-3">
   <textarea class="form-control" rows="3" id="ccontent" name="ccontent"></textarea>
   <div class="input-group-append">
+  <sec:authorize access="isAuthenticated()">
     <button data-oper='register' class="btn btn-outline-secondary" type="button" id="register"><spring:message code="comment.button" /></button>
+  </sec:authorize>
   </div>
 </div>
 

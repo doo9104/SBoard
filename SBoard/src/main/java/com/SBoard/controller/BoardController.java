@@ -155,9 +155,13 @@ public class BoardController {
 	}
 	
 	
-	
+	@PreAuthorize("principal.username == #bwriter")
 	@PostMapping("/modify")
-	public String modify(BoardVO board, @ModelAttribute("page") SearchDTO page,RedirectAttributes rttr) {
+	/*
+	 * public String modify(BoardVO board, @ModelAttribute("page") SearchDTO
+	 * page,RedirectAttributes rttr) {
+	 */
+	public String modify(BoardVO board, SearchDTO page,RedirectAttributes rttr) {
 		//service.modify는 수정 여부를 boolean타입으로 지정했으므로 성공한 경우에만 RedirectAttributes에 저장
 		log.info("modify : " + board);
 		
@@ -176,8 +180,9 @@ public class BoardController {
 		return "redirect:/board/list" + page.makeParam();
 	}
 	
+	@PreAuthorize("principal.username == #bwriter")
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno,@ModelAttribute("page") SearchDTO page, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno,@ModelAttribute("page") SearchDTO page, RedirectAttributes rttr, String bwriter) {
 		
 		log.info("remove : " + bno);
 		

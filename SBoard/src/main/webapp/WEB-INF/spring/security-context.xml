@@ -15,12 +15,10 @@
 
 	<security:intercept-url pattern="/board/list" access="permitAll"/>
 	
-	<security:intercept-url pattern="/board/register" access="hasRole('ROLE_MEMBER')"/>
-	
-	
+	<security:intercept-url pattern="/board/register" access="hasAnyRole('ROLE_USER,ROLE_MEMBER,ROLE_ADMIN')"/>
 	
 	<!-- 커스텀 로그인 -->
-	<!-- <security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/> -->
+	<!-- <security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/>  -->
 	<security:form-login login-page="/customLogin"/>
 	
 	<!-- 로그아웃 -->

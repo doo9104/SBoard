@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <%@include file="../includes/header.jsp" %>
 <script src="/resources/js/ckeditor.js"></script>
@@ -57,7 +58,6 @@ align-items: center;
 width:600px;
 }
 
-
 </style>
 
 <p/>
@@ -92,9 +92,10 @@ width:600px;
  	
     <div class="form-group">
       <label for="bwriter"><spring:message code="writer" /></label>
-      <input class="form-control" id="bwriter" name='bwriter'></input>
+      <input class="form-control" id="bwriter" name='bwriter' value='<sec:authentication property="principal.username"/>' readonly="readonly"></input>
     </div>   
     <button type="submit" class="btn btn-primary"><spring:message code="write.button" /></button>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
   </fieldset>
 </form>
 
@@ -216,6 +217,11 @@ $(document).ready(function(e){
 	}
 	
 	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
+	console.log("csrfHeaderName : " + csrfHeaderName);
+	console.log("csrfTokenValue : " + csrfTokenValue);
 	
 	
 	$("input[type='file']").change(function(e){
@@ -237,14 +243,15 @@ $(document).ready(function(e){
 		url : '/uploadAjaxAction',
 		processData : false,
 		contentType : false,
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
 		data:formData,
 		type : 'POST',
 		dataType:'json',
 		success: function(result){
 			console.log(result);
-			/* showUploadedFile(result) */
 			showUploadResult(result);
-			
 		}
 	}); // $.ajax
 	});
@@ -300,6 +307,9 @@ $(document).ready(function(e){
 		$.ajax({
 			url: '/deleteFile',
 			data: {fileName: targetFile, type:type},
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			dataType:'text',
 			type: 'POST',
 				success: function(result) {

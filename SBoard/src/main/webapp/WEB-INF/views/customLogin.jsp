@@ -129,7 +129,6 @@
 <script>
 $("#btnLogin").on("click", function(e) {
 	e.preventDefault();
-	alert("클릭");
 	$(".loginForm").submit();
 });
 

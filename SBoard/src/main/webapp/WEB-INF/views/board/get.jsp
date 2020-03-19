@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <%@include file="../includes/header.jsp" %>
 
@@ -75,8 +76,7 @@ width:600px;
       <label for="bwriter"><spring:message code="writer" /></label>
       <input class="form-control" id="bwriter" name='bwriter' disabled="" value='<c:out value="${board.bwriter}"/>'>
     </div>
-    <button data-oper='modify' class="btn btn-outline-primary"><spring:message code="read.modify" /></button>
-    <button data-oper='list' class="btn btn-primary"><spring:message code="read.list" /></button>
+    
   </fieldset><p/>	
 	
 	<!-- 첨부파일  -->
@@ -95,6 +95,14 @@ width:600px;
 	</div> <!-- end row -->
 
 
+<sec:authentication property="principal" var="pinfo"/>
+	<sec:authorize access="isAuthenticated()">
+		<c:if test="${pinfo.username eq board.bwriter}">
+			<button data-oper='modify' class="btn btn-outline-primary"><spring:message code="read.modify" /></button>
+		</c:if>
+	</sec:authorize>
+    <button data-oper='list' class="btn btn-primary"><spring:message code="read.list" /></button>
+    <p/>
 	
 	<!-- 사진확대용 div -->
 	<div class='bigPictureWrapper'>
@@ -119,52 +127,6 @@ width:600px;
 
 <!-- ------------------------------------------------------------------------------------------------ -->
 <script type="text/javascript" src="/resources/js/comment.js"></script>
-
-
-<script>
-
-
-var bnoValue = '<c:out value="${board.bno}"/>';
-
-// 댓글 등록
-/*  CommentService.add(
-		{ccontent:"댓글테스트", cwriter:"noob", bno:bnoValue}
-		,
-		function(result) {
-			alert("RESULT : " + result);
-		}
-);  */
-
-// 댓글 가져오기
-/* CommentService.getList({bno:bnoValue, page:1}, function(list) {
-	
-	for(var i=0, len=list.length||0; i<len;i++){
-		console.log(list[i]);
-	}
-}); */
-
-// 댓글 삭제
-/* CommentService.remove(12, function(count) {
-	
-	console.log(count);
-	
-	if(count === "success") {
-		alert("REMOVED");
-	}
-}, function(err) {
-	alert("ERROR");
-}); */
-
-/* CommentService.update({
-	cno : 11,
-	bno : bnoValue,
-	ccontent : "댓글 수정"
-}, function(result) {
-	alert("수정완료");
-});
- */
-</script>
-
 
 
 <!-- 스크립트 시작  -->

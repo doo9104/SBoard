@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <%@include file="../includes/header.jsp" %>
 <script src="/resources/js/ckeditor.js"></script>
@@ -67,6 +68,7 @@ width:600px;
 		<input type='hidden' name='amount' value='<c:out value="${page.amount}"/>'>
 		<input type='hidden' name='keyword' value='<c:out value="${page.keyword }"/>'>
 		<input type='hidden' name='searchType' value='<c:out value="${page.searchType }"/>'>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
   <fieldset>
     <legend><spring:message code="modify.text" /></legend>
@@ -114,9 +116,13 @@ width:600px;
 		</div> <!-- end col-lg-12 -->
 	</div> <!-- end row -->
     
-    
+  <sec:authentication property="principal" var="pinfo"/>
+  	<sec:authorize access="isAuthenticated()">
+  		<c:if test="${pinfo.username eq board.bwriter}">
     <button data-oper='modify' type="submit" class="btn btn-outline-primary"><spring:message code="modify.modifybutton" /></button>
     <button data-oper='remove' type="submit" class="btn btn-danger"><spring:message code="modify.removebutton" /></button>
+  		</c:if>
+  </sec:authorize>
     <button data-oper='list' type="submit" class="btn btn-primary"><spring:message code="modify.listbutton" /></button>
     
   </fieldset>
@@ -280,7 +286,8 @@ $(document).ready(function() {
 	}
 	
 	
-	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	
 	$("input[type='file']").change(function(e){
 		
@@ -301,6 +308,9 @@ $(document).ready(function() {
 		url : '/uploadAjaxAction',
 		processData : false,
 		contentType : false,
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
 		data:formData,
 		type : 'POST',
 		dataType:'json',

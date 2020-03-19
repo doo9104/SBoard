@@ -36,7 +36,7 @@ public class MemberTests {
 	@Test
 	public void testInsertAuth() {
 		
-			String sql = "insert into tbl_member_auth (userid, auth) values(?,?)";
+			String sql = "insert into tbl_member_auth(userid, auth) values(?,?)";
 			
 			for(int i=0;i<10;i++) {
 				Connection con = null;
@@ -45,6 +45,8 @@ public class MemberTests {
 				try {
 					con = ds.getConnection();
 					pstmt = con.prepareStatement(sql);
+					
+					
 								
 					if(i<5) {
 						pstmt.setString(1, "user"+i);
