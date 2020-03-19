@@ -6,6 +6,8 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 
+
+
 <link href="/resources/css/commentStyles.css" rel="stylesheet" type="text/css">
 <p/>
 
@@ -71,6 +73,30 @@ $(document).ready(function() {
 	var scrollCount = 1;
 	var str = "";
 	var a = 1;
+	
+	var commentWriter = null;
+	
+	/* 시큐리티 값 변수에넣기 */
+	<sec:authorize access="isAuthenticated()">
+	commentWriter = '<sec:authentication property="principal.username"/>';
+	</sec:authorize>
+	console.log("commentWriter : " +commentWriter);
+	
+	//댓글 입력창에 유저 닉네임 넣기
+	if(commentWriter != null) {
+	document.getElementById('cwriter').value = commentWriter;
+	} else {
+		document.getElementById('cwriter').value = '없지롱';
+	}
+		
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(csrfHeaderName,csrfTokenValue)
+	});
+	
 	
 	showList(1);
 	console.log("scrollCount : " + scrollCount);

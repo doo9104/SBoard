@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,6 @@ import com.SBoard.service.CommentService;
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.CommentPageDTO;
 import com.SBoard.vo.CommentVO;
-import com.SBoard.vo.SearchDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -37,6 +37,7 @@ public class CommentController {
 	
 	
 	// REST 방식으로 처리할 때 외부에서 서버를 호출할때와 서버에서 보내주는 데이터의 타입을 명확히 해야한다.
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "/new",
 			consumes = "application/json",
 			produces = { MediaType.TEXT_PLAIN_VALUE })

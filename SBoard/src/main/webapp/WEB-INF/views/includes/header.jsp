@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,10 +39,25 @@
       </li>
     </ul>
     <!-- 오른쪽 메뉴 -->
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-center">
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary justify-content-end">
   		<ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">로그인</a>
+      <sec:authorize access="isAuthenticated()"> <!-- 로그인되있을때 로그아웃 -->
+     	<div class="row">
+     	<div class="col-md-5">
+     	<a class="nav-link"><sec:authentication property="principal.username"/></a>
+     	</div>
+     	<div class="col-md-7">
+        <form id="logoutForm" action="/customLogout" method='post'>
+			<input type='hidden' name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<a class="nav-link" id="logout" href="#">로그아웃</a>
+		</form>
+		</div>
+		</div>
+      </sec:authorize>
+      <sec:authorize access="isAnonymous()"> <!-- 로그아웃상태일때 로그인 -->
+      	<a class="nav-link" href="/customLogin">로그인</a>
+      </sec:authorize>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">회원가입</a>
@@ -73,6 +90,14 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+	//로그아웃버튼
+$("#logout").on("click", function(e) {	
+	e.preventDefault();
+	var logoutForm = $("#logoutForm");
+	logoutForm.submit();
+});
+	
+	
 $("#korean").on("click", function(e) {	
 	e.preventDefault();
 	location.href='/board/list?lang=ko';
