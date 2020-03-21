@@ -10980,3 +10980,8 @@ table-primary, table-secondary, table-success, table-info, table-warning, table-
 .list-group {
   font-size: 0.930125rem;
 }
+
+/* 커스텀 */
+.rec:link { color: black; text-decoration: none;}
+.rec:visited { color: black; text-decoration: none;}
+.rec:hover { color: red; text-decoration: underline;}

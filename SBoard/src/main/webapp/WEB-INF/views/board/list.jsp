@@ -24,7 +24,7 @@
   <td><a class='move' href='<c:out value="${board.bno}"/>'><c:out value="${board.btitle}" /></a><small> [<c:out value="${board.commentCnt}"/>]</small></td>
   <td><c:out value="${board.bwriter}" /></td>
   <td><c:out value="${board.bhit}" /></td>
-  <td><c:out value="${board.brec_up}" /></td>
+  <td><c:out value="${board.brec}" /></td>
   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.bregdate }"/></td>
   </tr>
   </c:forEach>

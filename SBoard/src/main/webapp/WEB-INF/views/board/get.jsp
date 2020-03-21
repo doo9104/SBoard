@@ -103,6 +103,19 @@ width:600px;
 	</sec:authorize>
     <button data-oper='list' class="btn btn-primary"><spring:message code="read.list" /></button>
     <p/>
+    
+    <!-- 추천 -->
+   <!-- <i class="far fa-thumbs-up fa-3x"></i> -->
+   <div class="fa-4x row justify-content-md-center">
+   <span class="fa-layers fa-fw">
+   	<i class="fas fa-circle" style="color:#F5F5F5"></i>
+    <a class="rec" href="#"><i class="far fa-heart" data-fa-transform="shrink-6"></i></a>
+    <span class="fa-layers-counter" style="background:Tomato"><c:out value="${board.brec}" /></span>
+  </span>
+  </div>
+    <!-- 추천 -->
+    <p/>
+    
 	
 	<!-- 사진확대용 div -->
 	<div class='bigPictureWrapper'>
@@ -237,6 +250,28 @@ $(document).ready(function() {
 		setTimeout(function() {
 			$('.bigPictureWrapper').hide();
 		}, 1000);
+	});
+	
+	
+	//댓글
+	
+	var alreadyClick = false;
+	
+	$(".rec").on("click", function(e) {
+		e.preventDefault();
+		if(!alreadyClick) {
+		var cnt = '<c:out value="${board.brec}" />';
+		
+		console.log("cnt : " + cnt);
+		cnt = parseInt(cnt)+1;
+		console.log("cnt : " + cnt);
+		alert("추천하였습니다.");
+		alreadyClick = true;
+		}else {
+			alert("이미 추천하였습니다.");
+			return;
+		}
+		
 	});
 	
 });

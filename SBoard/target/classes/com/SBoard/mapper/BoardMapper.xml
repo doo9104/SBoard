@@ -51,11 +51,11 @@ order by를 사용할 수 있지만 차후 데이터가 많아질 경우 속도�
 <select id="getListPaging" resultType="com.SBoard.vo.BoardVO">
  <![CDATA[ 
 select
-	bno,btitle,bcontent,bwriter,bhit,bregdate,bupdateregdate,commentCnt
+	bno,btitle,bcontent,bwriter,bhit,brec,bregdate,bupdateregdate,commentCnt
 from
 	(
 	select /*+INDEX_DESC(tbl_board pk_board) */
-		rownum rn,bno,btitle,bcontent,bwriter,bhit,bregdate,bupdateregdate,commentCnt
+		rownum rn,bno,btitle,bcontent,bwriter,bhit,brec,bregdate,bupdateregdate,commentCnt
 	from
 		tbl_board
 	where rownum <= #{pageNum} * #{amount} ]]><include refid="search"></include>
@@ -93,5 +93,10 @@ where bno = #{bno}
 update tbl_board set commentCnt = commentCnt + #{amount} where bno = #{bno}
 </update>
 
+<!-- 추천 체크 -->
+<!-- <update id="re_check" parameterType="HashMap">
+update tbl_rec
+set 
+</update> -->
 
 </mapper>

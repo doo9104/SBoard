@@ -13,7 +13,7 @@ public class BoardVO {
 	private String bcontent;
 	private String bwriter;
 	private long bhit;
-	private long brec_up;
+	private long brec;
 	private long brec_dn;
 	private Date bregdate;
 	private Date bupdateregdate;

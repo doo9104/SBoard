@@ -18,7 +18,7 @@
   <div class="input-group-prepend">
     <span class="input-group-text" id="basic-addon1"><spring:message code="writer" /></span>
   </div>
-  <input type="text" class="form-control" id="cwriter" name="cwriter">
+  <input type="text" class="form-control" readonly="readonly" id="cwriter" name="cwriter">
   <input type="hidden" name="cregdate">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </div>

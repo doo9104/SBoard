@@ -10,9 +10,11 @@
 <title><spring:message code="site.title" text="SBoard" /></title>
 
 <!-- <link href="/resources/css/bootstrap-min.css" rel="stylesheet" type="text/css"> -->
+<link href="/resources/css/all.css" rel="stylesheet">
+ <script defer src="/resources/js/all.js"></script>
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+ -->
 </head>
 <body>
 
@@ -23,8 +25,8 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor01">
-    <ul class="navbar-nav mr-auto">
+  <div class="collapse navbar-collapse flex-grow-1 text-right" id="navbarColor01">
+    <!-- <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
       </li>
@@ -37,10 +39,10 @@
       <li class="nav-item">
         <a class="nav-link" href="#">About</a>
       </li>
-    </ul>
+    </ul> -->
     <!-- 오른쪽 메뉴 -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-primary justify-content-end">
-  		<ul class="navbar-nav mr-auto">
+   <!--  <nav class="navbar navbar-expand-md navbar-dark bg-primary justify-content-end"> -->
+  		<ul class="navbar-nav ml-auto flex-nowrap">
       <li class="nav-item">
       <sec:authorize access="isAuthenticated()"> <!-- 로그인되있을때 로그아웃 -->
      	<div class="row">
@@ -63,7 +65,7 @@
         <a class="nav-link" href="#">회원가입</a>
       </li>
     </ul>
-	</nav>
+	<!-- </nav> -->
 	<!-- 오른쪽 메뉴 끝 -->
     <a href="" id="korean"><img src="/resources/img/kr.png"></a>
     <a href="" id="english"><img src="/resources/img/us.png"></a>
