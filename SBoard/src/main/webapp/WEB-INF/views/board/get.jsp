@@ -5,7 +5,9 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <%@include file="../includes/header.jsp" %>
-<link rel="stylesheet" href="/resources/css/test.css">
+<link rel="stylesheet" href="/resources/css/fontawesome_animations.css">
+<link rel="stylesheet" href="/resources/css/LikeAnimation.css"> <!-- 좋아요버튼 클릭 애니메이션 -->
+<script src="/resources/js/LikeAnimation.js"></script> <!-- 좋아요 버튼 애니메이션 함수 -->
 <script src="/resources/js/ckeditor.js"></script>
 <style>
 .uploadResult {
@@ -107,12 +109,18 @@ width:600px;
     <!-- 추천 -->
    <!-- <i class="far fa-thumbs-up fa-3x"></i> -->
    <div class="fa-4x row justify-content-md-center">
+   <div class="fancy-button">
+  		<div class="left-frills frills"></div>
+  			<div class="button">
    <span class="fa-layers fa-fw">
-   	<i class="fas fa-circle" style="color:#F5F5F5"></i>
-    <a class="rec" href="#"><i id="heart" class="far fa-heart faa-pulse animated-hover" data-fa-transform="shrink-6"></i></a>
-    <span class="fa-layers-counter" id="recValue" style="background:Tomato"><c:out value="${board.brec}" /></span>
-  </span>
-  </div>
+   <i class="fas fa-circle" style="color:#F5F5F5"></i>
+   <a class="rec" href="#"><i id="heart" class="far fa-heart faa-pulse animated-hover" data-fa-transform="shrink-6"></i></a>
+   <span class="fa-layers-counter" id="recValue" style="background:Tomato"><c:out value="${board.brec}" /></span>
+   </span>
+  			</div>
+  			<div class="right-frills frills"></div>
+	</div>
+ 	</div>
     <!-- 추천 -->
     <p/>
     
@@ -122,6 +130,7 @@ width:600px;
 	<div class='bigPicture'>
 	</div>
 	</div>
+	
 	
 	
 	<form id="operForm" action="/board/modify" method="get">
@@ -256,6 +265,8 @@ $(document).ready(function() {
 	var bno = '<c:out value="${board.bno}"/>';
 	var userid = "";
 	
+	var cnt = parseInt('<c:out value="${board.brec}" />');
+	
 	<sec:authorize access="isAnonymous()">	
 		userid = "Anonymous";
 	</sec:authorize>
@@ -281,7 +292,7 @@ $(document).ready(function() {
 		},
 		success : function(result) {
 			alreadyLike = result;
-			if(result > 0) {
+			if(alreadyLike > 0) {
 				$('#heart').removeClass('far fa-heart faa-pulse animated-hover').addClass('fas fa-heart faa-pulse animated-hover');
 			}
 			
@@ -307,7 +318,6 @@ $(document).ready(function() {
 			     return false;
 			 }
 		} else {
-		var cnt = parseInt('<c:out value="${board.brec}" />');
 		var data = {
 			"recno" : bno,
 			"bno" : bno,
@@ -336,6 +346,7 @@ $(document).ready(function() {
 				}
 				else if(result == 'success'){
 					cnt += 1;
+					alreadyLike = 1;
 					$('#heart').removeClass('far fa-heart faa-pulse animated-hover').addClass('fas fa-heart faa-pulse animated-hover');
 					$('#recValue').html(cnt);
 				}

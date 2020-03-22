@@ -254,6 +254,7 @@ public class BoardController {
 			return "already";
 		} else {
 		// 처음 추천일경우
+		log.info("처음 추천했을때 result : " + result);
 		service.createRecLike(vo);
 		service.updateBoardLike(vo);
 		return "success";
@@ -267,8 +268,9 @@ public class BoardController {
 	@ResponseBody
 	public int likeCheck(@RequestBody RecVO vo) {
 		int result = service.getBoardLike(vo);
+		// 0이면 처음, 1이면 이미 추천 이력 있음
 		log.info("check vo : " +vo);
-		log.info("result : " +result);
+		log.info("좋아요여부 result : " +result);
 		return result;
 	}
 	
