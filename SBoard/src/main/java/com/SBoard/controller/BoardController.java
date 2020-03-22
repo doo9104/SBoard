@@ -3,7 +3,10 @@ package com.SBoard.controller;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -30,6 +34,7 @@ import com.SBoard.vo.BoardAttachVO;
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
 import com.SBoard.vo.PageDTO;
+import com.SBoard.vo.RecVO;
 import com.SBoard.vo.SearchDTO;
 
 import lombok.AllArgsConstructor;
@@ -54,7 +59,7 @@ public class BoardController {
 		log.info("list " + page);
 		
 		model.addAttribute("list",service.getList(page));
-	
+		
 	
 		int total = service.totalCount(page);
 		model.addAttribute("pageMaker", new PageDTO(page,total));
@@ -104,10 +109,10 @@ public class BoardController {
 	
 	// 중괄호로 감싸주면 여러개 매핑처리 가능
 	@GetMapping("/get")
-	public void get(@RequestParam("bno") Long bno, @ModelAttribute("page") SearchDTO page, Model model) {
+	public void get(@RequestParam("bno") Long bno, @ModelAttribute("page") SearchDTO page,Model model) {
 		// 화면으로 해당 bno의 게시글을 전달해야하므로 model을 파라미터로 지정
 		log.info("get : " + bno);
-				
+	
 		Cookie[] cookies = request.getCookies();	
 		// 비교하기 위해 새로운 널값 쿠키 생성
 		Cookie viewCookie = null;
@@ -234,5 +239,37 @@ public class BoardController {
 		
 	}
 	
+
+	@RequestMapping(value = "/like", method=RequestMethod.POST,consumes = "application/json",
+			produces = { MediaType.TEXT_PLAIN_VALUE })
+	@ResponseBody
+	public String like(@RequestBody RecVO vo) {
+
+		log.info("RecVO : " + vo);
+		int result = service.getBoardLike(vo);
+		if(result > 0) {
+			// 이미 추천했을경우
+			service.deleteRecLike(vo);
+			service.updateBoardLike(vo);
+			return "already";
+		} else {
+		// 처음 추천일경우
+		service.createRecLike(vo);
+		service.updateBoardLike(vo);
+		return "success";
+		}
+	}
+	
+	
+	// 좋아요 여부 확인
+	@RequestMapping(value = "/likecheck", method=RequestMethod.POST,consumes = "application/json",produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	public int likeCheck(@RequestBody RecVO vo) {
+		int result = service.getBoardLike(vo);
+		log.info("check vo : " +vo);
+		log.info("result : " +result);
+		return result;
+	}
 	
 }

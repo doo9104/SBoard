@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.SBoard.vo.BoardAttachVO;
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
+import com.SBoard.vo.RecVO;
 import com.SBoard.vo.SearchDTO;
 import com.SBoard.mapper.BoardAttachMapper;
 import com.SBoard.mapper.BoardMapper;
@@ -106,5 +107,25 @@ public class BoardServiceImpl implements BoardService {
 		return attachMapper.findByBno(bno);
 	}
 	
+	
+	@Override
+	public void createRecLike(RecVO vo) {
+		mapper.createRecLike(vo);
+	}
+	
+	@Override
+	public void deleteRecLike(RecVO vo) {
+		mapper.deleteRecLike(vo);
+	}
+	
+	@Override
+	public void updateBoardLike(RecVO vo) {
+		mapper.updateBoardLike(vo);
+	}
+	
+	@Override
+	public int getBoardLike(RecVO vo) {
+		return mapper.getBoardLike(vo);		
+	}
 
 }

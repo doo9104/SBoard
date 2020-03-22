@@ -5,7 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <%@include file="../includes/header.jsp" %>
-
+<link rel="stylesheet" href="/resources/css/test.css">
 <script src="/resources/js/ckeditor.js"></script>
 <style>
 .uploadResult {
@@ -109,8 +109,8 @@ width:600px;
    <div class="fa-4x row justify-content-md-center">
    <span class="fa-layers fa-fw">
    	<i class="fas fa-circle" style="color:#F5F5F5"></i>
-    <a class="rec" href="#"><i class="far fa-heart" data-fa-transform="shrink-6"></i></a>
-    <span class="fa-layers-counter" style="background:Tomato"><c:out value="${board.brec}" /></span>
+    <a class="rec" href="#"><i id="heart" class="far fa-heart faa-pulse animated-hover" data-fa-transform="shrink-6"></i></a>
+    <span class="fa-layers-counter" id="recValue" style="background:Tomato"><c:out value="${board.brec}" /></span>
   </span>
   </div>
     <!-- 추천 -->
@@ -142,6 +142,7 @@ width:600px;
 <script type="text/javascript" src="/resources/js/comment.js"></script>
 
 
+
 <!-- 스크립트 시작  -->
 <script type="text/javascript">
 $(document).ready(function() {
@@ -149,11 +150,6 @@ $(document).ready(function() {
 	
 	ClassicEditor
 	.create( document.querySelector( '#bcontent' ), {	
-		
-		
-
-		
-		
 	} )
 	.then( editor => {
 			editor.isReadOnly = true;
@@ -163,8 +159,9 @@ $(document).ready(function() {
 	        console.error( error );
 	} );
 	
-	
-	
+	// 시큐리티 csrf 토큰 헤더 설정
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	
 	
 	var operForm = $("#operForm");
@@ -182,7 +179,7 @@ $(document).ready(function() {
 	
 	(function() {
 		var bno = '<c:out value="${board.bno}"/>';
-	
+		
 	$.getJSON("/board/getAttachList", {bno: bno}, function(arr) {
 		console.log(arr);
 		
@@ -253,34 +250,112 @@ $(document).ready(function() {
 	});
 	
 	
-	//댓글
+	// 좋아요 여부 확인
+	// 좋아요 여부 확인 변수
+	var alreadyLike = "";
+	var bno = '<c:out value="${board.bno}"/>';
+	var userid = "";
 	
-	var alreadyClick = false;
-	
-	$(".rec").on("click", function(e) {
-		e.preventDefault();
-		if(!alreadyClick) {
-		var cnt = '<c:out value="${board.brec}" />';
-		
-		console.log("cnt : " + cnt);
-		cnt = parseInt(cnt)+1;
-		console.log("cnt : " + cnt);
-		alert("추천하였습니다.");
-		alreadyClick = true;
-		}else {
-			alert("이미 추천하였습니다.");
-			return;
+	<sec:authorize access="isAnonymous()">	
+		userid = "Anonymous";
+	</sec:authorize>
+
+	<sec:authorize access="isAuthenticated()">	
+		userid = '<sec:authentication property="principal.username"/>';
+	</sec:authorize>
+	console.log("userid : " + userid);
+	var likecheckData = {
+		"recno" : bno,
+		"bno" : bno,
+		"userid" : userid
+	};
+	var likecheckJsonStr = JSON.stringify(likecheckData);
+	$.ajax({
+		url : '/board/likecheck',
+		type : 'POST',
+		data : likecheckJsonStr,
+		dataType: 'text',
+		contentType : "application/json; charset=utf-8",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		success : function(result) {
+			alreadyLike = result;
+			if(result > 0) {
+				$('#heart').removeClass('far fa-heart faa-pulse animated-hover').addClass('fas fa-heart faa-pulse animated-hover');
+			}
+			
+		},
+		error : function(error) {
+			alert("통신 에러!");
 		}
 		
 	});
 	
+	
+		
+	
+	
+	
+	//추천
+	$(".rec").on("click", function(e) {
+		e.preventDefault();
+		if(userid == "Anonymous") {
+			 if (confirm("로그인한 사용자만 가능합니다.\n로그인하시겠습니까?") == true){    //확인
+				 window.location.href="/customLogin";
+			 }else{   //취소
+			     return false;
+			 }
+		} else {
+		var cnt = parseInt('<c:out value="${board.brec}" />');
+		var data = {
+			"recno" : bno,
+			"bno" : bno,
+			"userid" : userid
+		};
+		var jsonStr = JSON.stringify(data);
+		// ,,,,,,,,,,,,,,,,,,,,,,,
+		$.ajax({
+			url : '/board/like',
+			type : 'POST',
+			data : jsonStr,
+			contentType : "application/json; charset=utf-8",
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function(result) {
+				if(result == 'already'){
+					if(alreadyLike == 1){ // 이미 추천했었던 게시물일때
+						cnt -= 1;
+						$('#heart').removeClass('fas fa-heart faa-pulse animated-hover').addClass('far fa-heart faa-pulse animated-hover');
+						$('#recValue').html(cnt);
+					} else{ // 페이지 내에서 추천후 취소할 때
+					$('#heart').removeClass('fas fa-heart faa-pulse animated-hover').addClass('far fa-heart faa-pulse animated-hover');
+					$('#recValue').html(cnt);
+					}
+				}
+				else if(result == 'success'){
+					cnt += 1;
+					$('#heart').removeClass('far fa-heart faa-pulse animated-hover').addClass('fas fa-heart faa-pulse animated-hover');
+					$('#recValue').html(cnt);
+				}
+				
+				},
+			error : function(error) {
+				alert("error : " + error);
+			}
+			
+		
+			
+			
+		}) // ajax 끝
+		} // else 끝
+		// ,,,,,,,,,,,,,,,,,,,,,,,
+
+	}); // 함수 끝
+	
+
 });
-
-
-
-
-
-
 </script>
 
 

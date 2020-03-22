@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.SBoard.vo.BoardPageVO;
 import com.SBoard.vo.BoardVO;
+import com.SBoard.vo.RecVO;
 import com.SBoard.vo.SearchDTO;
 
 public interface BoardMapper {
@@ -40,7 +41,19 @@ public interface BoardMapper {
 	// 댓글 수를 업데이트하는 메서드
 	public void updateCommentCnt(@Param("bno") Long bno, @Param("amount") int amount);
 	
-
+	// 추천
+	public void createRecLike(RecVO vo);
+	
+	// 추천 취소
+	public void deleteRecLike(RecVO vo);
+	
+	// 추천수 게시글에 반영
+	public void updateBoardLike(RecVO vo);
+	
+	// 추천수 확인
+	public int getBoardLike(RecVO vo);
+	
+	
 	
 }
 

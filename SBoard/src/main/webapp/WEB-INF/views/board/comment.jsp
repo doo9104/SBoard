@@ -86,7 +86,7 @@ $(document).ready(function() {
 	if(commentWriter != null) {
 	document.getElementById('cwriter').value = commentWriter;
 	} else {
-		document.getElementById('cwriter').value = '없지롱';
+		document.getElementById('cwriter').value = '로그인 후에 등록할 수 있습니다.';
 	}
 		
 	

@@ -94,9 +94,30 @@ update tbl_board set commentCnt = commentCnt + #{amount} where bno = #{bno}
 </update>
 
 <!-- 추천 체크 -->
-<!-- <update id="re_check" parameterType="HashMap">
-update tbl_rec
-set 
-</update> -->
+
+
+<insert id="createRecLike">
+insert into tbl_rec(recno,bno,userid)
+values (seq_rec.nextval,#{bno},#{userid})
+</insert>
+
+<delete id="deleteRecLike">
+delete from tbl_rec
+where bno = #{bno} and userid = #{userid}
+</delete>
+
+<update id="updateBoardLike">
+update tbl_board
+set
+brec = (select count(*)
+from tbl_rec
+where bno = #{bno})
+where bno = #{bno}
+</update>
+
+<select id="getBoardLike" resultType="int">
+select count(*) from tbl_rec where bno = #{bno} and userid = #{userid}
+</select>
+
 
 </mapper>

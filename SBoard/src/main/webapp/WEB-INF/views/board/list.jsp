@@ -36,6 +36,7 @@
 <div class="container">
   <div class="row">  <!-- 가1 -->
     <div class="col"> <!-- 가2 -->
+    <!-- 글 작성 버튼 -->
       <button type="button" onclick="location.href='register'" class="btn btn-primary"><spring:message code="board.write" /></button>
     </div> <!-- 가2 -->
     <div class="col-md-auto"> <!-- 가3 -->    
