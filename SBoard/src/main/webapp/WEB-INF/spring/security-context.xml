@@ -27,7 +27,8 @@
 		
 	<!-- 접근권한 거부 -->
 	<security:access-denied-handler ref="customAccessDenied"/>	
-	
+	<security:intercept-url pattern="/**" access="permitAll" />
+
 	<!-- 자동로그인 remeber me -->
 	<!-- <security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/> -->
 

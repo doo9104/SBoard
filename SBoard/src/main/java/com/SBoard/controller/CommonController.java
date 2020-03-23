@@ -1,16 +1,31 @@
 package com.SBoard.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+import com.SBoard.service.MemberManageService;
+import com.SBoard.vo.MemberVO;
 
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
 public class CommonController {
-
+	
+	@Autowired(required=true)
+	private MemberManageService service;
 	
 	// 접근 권한 거부
 	@GetMapping("/accessError")
@@ -51,7 +66,18 @@ public class CommonController {
 		
 	}
 	
-	
+	@RequestMapping(value = "/idCheck", method=RequestMethod.POST,consumes = "application/json",produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	public int test(@RequestBody MemberVO vo) {
+		int result=0;
+		log.info("vo : " + vo);
+		MemberVO userid = service.getUserId(vo);
+		if(userid!=null) result=1;
+		
+		log.info("아이디 체크 결과 : " + result);
+		return result;
+	}
 	
 	
 	

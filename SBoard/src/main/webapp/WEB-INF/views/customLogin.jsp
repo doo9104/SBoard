@@ -62,6 +62,16 @@
 <script>
 $("#btnLogin").on("click", function(e) {
 	e.preventDefault();
+	if($.trim($('#username').val()) == ''){
+		alert("아이디를 입력해 주세요.");
+		$('#username').focus();
+		return;
+	}else if($.trim($('#password').val()) == ''){
+		alert("패스워드를 입력해 주세요.");
+		$('#password').focus();
+		return;
+	}
+
 	$(".loginForm").submit();
 });
 
