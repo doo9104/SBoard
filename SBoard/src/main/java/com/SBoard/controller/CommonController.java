@@ -46,7 +46,10 @@ public class CommonController {
 
 	}
 	
-	
+	@GetMapping("/join")
+	public void join() {
+		
+	}
 	
 	
 	

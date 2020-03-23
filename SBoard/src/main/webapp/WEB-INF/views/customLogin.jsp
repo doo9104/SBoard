@@ -37,10 +37,10 @@
                                 <hr/>
                                 <div>
                                     <label class="custom-control custom-checkbox">
-                                     <a href="javascript:void('register-form-link');" class="register-form-link">Register</a>
+                                     <a href="/join" class="register-form-link">Register</a>
                                     </label>
 									<label class="custom-control custom-checkbox">
-                                     <a href="javascript:void('forgot-form-link');" class="forgot-form-link">Forgot Password</a>
+                                     <a href="/findpassword" class="forgot-form-link">Forgot Password</a>
                                     </label>
                                 </div>
                                 <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
@@ -50,74 +50,7 @@
                     </div>
                     <!-- /form card login end-->
 					
-					    <!-- form card register -->
-                    <div class="card rounded-0" id="register-form">
-                        <div class="card-header">
-                            <h3 class="mb-0">New Account</h3>
-                        </div>
-                        <div class="card-body">
-                            <form class="registerform" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
-                                <div class="form-group">
-                                    <label for="r_username">Username</label>
-                                    <input type="text" class="form-control form-control-lg rounded-0" name="r_username" id="r_username" required="">
-
-                                </div>
-								<div class="form-group">
-                                    <label for="r_name">Name</label>
-                                    <input type="text" class="form-control form-control-lg rounded-0" name="r_name" id="r_name" required="">
-
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" class="form-control form-control-lg rounded-0" name="r_password" id="r_password" required="" autocomplete="new-password">
-  
-                                </div>
-								<div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" class="form-control form-control-lg rounded-0" name="r_password" id="r_password" required="" autocomplete="new-password">
-     
-                                </div>
-								<div class="form-group">
-                                    <label>E-mail:</label>
-                                    <input type="email" class="form-control form-control-lg rounded-0" id="pwd1" required="" autocomplete="new-password">
-               
-                                </div>
-                                <div>
-                                    <label class="custom-control custom-checkbox">
-                                     I have an account. <a href="javascript:void('register-form-load');" class="login-form-link">Login.</a>
-                                    </label>
-                                </div>
-                                <button type="submit" class="btn btn-success btn-lg float-right" id="btnRegister">Register</button>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- /form card register end -->
 					
-					    <!-- form card forgot -->
-                    <div class="card rounded-0" id="forgot-form">
-                        <div class="card-header">
-                            <h3 class="mb-0">Reset Password</h3>
-                        </div>
-                        <div class="card-body">
-                            <form class="forgotform" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
-                                <div class="form-group">
-                                    <label>E-mail</label>
-                                    <input type="email" class="form-control form-control-lg rounded-0" id="pwd1" required="" autocomplete="new-password">
-               
-                                </div>
-								<div>
-								<label class="custom-control custom-checkbox">
-                                     <a href="javascript:void('register-form-link');" class="register-form-link">Register</a>
-                                    </label>
-									<label class="custom-control custom-checkbox">
-                                     <a href="javascript:void('login-form-link');" class="login-form-link">Login</a>
-                                    </label>
-								</div>
-                                <button type="submit" class="btn btn-success btn-lg float-right" id="btnReset">Reset Password</button>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- /form card forgot end -->
                 </div>
             </div>
         </div>

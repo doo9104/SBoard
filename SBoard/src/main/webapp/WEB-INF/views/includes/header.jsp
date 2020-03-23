@@ -62,7 +62,7 @@
       </sec:authorize>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">회원가입</a>
+        <a class="nav-link" href="/join">회원가입</a>
       </li>
     </ul>
 	<!-- </nav> -->

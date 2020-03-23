@@ -11,6 +11,7 @@
 <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 <bean id="customUserDetailsService" class="com.SBoard.security.CustomUserDetailsService"></bean>
 
+
 <security:http>
 
 	<security:intercept-url pattern="/board/list" access="permitAll"/>
@@ -27,12 +28,17 @@
 	<!-- 접근권한 거부 -->
 	<security:access-denied-handler ref="customAccessDenied"/>	
 	
-	
+	<!-- 자동로그인 remeber me -->
+	<!-- <security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/> -->
+
 
 </security:http>
 
-<security:authentication-manager>
 
+
+
+
+<security:authentication-manager>
 <security:authentication-provider>
 
 	
@@ -48,7 +54,6 @@
 		<security:password-encoder
 		ref="bcryptPasswordEncoder" />
 </security:authentication-provider>
-
 </security:authentication-manager>
 
 
