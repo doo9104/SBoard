@@ -5,4 +5,23 @@
 <select id="getUserId" resultType="com.SBoard.vo.MemberVO">
 select userid from tbl_member where userid= #{userid}
 </select>
+
+<select id="getUserName" resultType="com.SBoard.vo.MemberVO">
+select username from tbl_member where username = #{username}
+</select>
+
+
+<insert id="createNewMember">
+insert into tbl_member(userid,username,userpw) values(#{userid},#{username},#{userpw})
+</insert>
+
+<insert id="giveAuth">
+insert into tbl_member_auth(userid,auth) values(#{userid},'ROLE_USER')
+</insert>
+
+
+
+
+
+
 </mapper>

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,9 @@ public class CommonController {
 	
 	@Autowired(required=true)
 	private MemberManageService service;
+	
+	@Autowired(required=true)
+	private PasswordEncoder pwencoder;
 	
 	// 접근 권한 거부
 	@GetMapping("/accessError")
@@ -69,7 +73,7 @@ public class CommonController {
 	@RequestMapping(value = "/idCheck", method=RequestMethod.POST,consumes = "application/json",produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	@ResponseBody
-	public int test(@RequestBody MemberVO vo) {
+	public int getUserID(@RequestBody MemberVO vo) {
 		int result=0;
 		log.info("vo : " + vo);
 		MemberVO userid = service.getUserId(vo);
@@ -77,6 +81,30 @@ public class CommonController {
 		
 		log.info("아이디 체크 결과 : " + result);
 		return result;
+	}
+	
+	
+	@RequestMapping(value = "/nameCheck", method=RequestMethod.POST,consumes = "application/json",produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	public int getUserName(@RequestBody MemberVO vo) {
+		int result=0;
+		log.info("vo : " + vo);
+		MemberVO username = service.getUserName(vo);
+		if(username!=null) result=1;
+		
+		log.info("닉네임 체크 결과 : " + result);
+		return result;
+	}
+	
+	@RequestMapping(value = "/join", method=RequestMethod.POST,consumes = "application/json",produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public void createMember(@RequestBody MemberVO vo) {
+
+		vo.setUserpw(pwencoder.encode(vo.getUserpw()));
+		log.info("vo : " + vo);
+		
+		 service.createNewMember(vo);
 	}
 	
 	
