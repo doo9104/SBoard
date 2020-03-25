@@ -18,7 +18,8 @@ public interface MemberManageService {
 	public MemberVO getUserName(MemberVO vo);
 	
 	// 유저 이메일 가져오기
-
+	public MemberVO getUserEmail(MemberVO vo);
+	
 	// 회원가입
 	public void createNewMember(MemberVO vo);
 	// 회원기입연동 일반사용자권한주기

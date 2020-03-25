@@ -15,6 +15,8 @@
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css">
 <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
  -->
+ <script defer src="/resources/js/bootbox.js"></script>
+ <script defer src="/resources/js/bootbox.locales.js"></script>
 </head>
 <body>
 

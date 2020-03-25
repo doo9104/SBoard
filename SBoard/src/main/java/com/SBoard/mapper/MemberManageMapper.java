@@ -8,6 +8,8 @@ public interface MemberManageMapper {
 	
 	public MemberVO getUserName(MemberVO vo);
 	
+	public MemberVO getUserEmail(MemberVO vo);
+	
 	public void createNewMember(MemberVO vo);
 	
 	public void giveAuth(MemberVO vo);

@@ -46,7 +46,8 @@
 								<div class="form-group">
                                     <label for="email">E-mail:</label>
                                     <input type="email" class="form-control form-control-lg rounded-0" name="email" id="email" required="" autocomplete="new-password">
-               
+               						<div class="valid-feedback">사용 가능한 이메일입니다!</div>
+                                    <div id="invalid2" class="invalid-feedback">이미 사용중인 이메일입니다.</div>
                                 </div>
                                 <div>
                                     <label class="custom-control custom-checkbox">
@@ -64,39 +65,43 @@
         </div>
     </div>
 
+<!-- 알림 -->
 
-<script type="text/javascript">
 
+<!-- 알림 -->
 
-</script>
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
+var emailC = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
 var csrfHeaderName = "${_csrf.headerName}",
 	csrfTokenValue = "${_csrf.token}";
 	
-	useridCheck = true;
+	useridCheck = false;
 	usernameCheck = false;
 	passwordCheck = false;
-	emailCheck = true;
+	emailCheck = false;
 
-/* var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/); */
 
 
 
 $("#btnRegister").on("click", function(e) { // 가입버튼
 	e.preventDefault();
-	if($("#userid").val() == ""){ alert("아이디를 입력하세요."); $("#userid").focus(); return false; }
-	if($("#username").val() == ""){ alert("닉네임을 입력하세요."); $("#username").focus(); return false; }
-	if($("#password").val() != $("#passwordConfirm").val()){ alert("비밀번호가 다릅니다."); $("#password").val(""); $("#passwordConfirm").val(""); $("#password").focus(); return false; }
-	if($("#email").val() == ""){ alert("이메일을 입력해주세요"); $("#email").focus(); return false; }
+	if($("#userid").val() == ""){ bootbox.alert("아이디를 입력하세요."); $("#userid").focus(); return false; }
+	if($("#username").val() == ""){ bootbox.alert("닉네임을 입력하세요."); $("#username").focus(); return false; }
+	if($("#password").val() != $("#passwordConfirm").val()){ bootbox.alert("비밀번호가 다릅니다."); $("#password").val(""); $("#passwordConfirm").val(""); $("#password").focus(); return false; }
+	if($("#email").val() == ""){ bootbox.alert("이메일을 입력해주세요"); $("#email").focus(); return false; }
 	/* if(!getMail.test($("#email").val())){ alert("이메일형식에 맞게 입력해주세요") $("#email").val(""); $("#email").focus(); return false; } */
+	
 	if(useridCheck == true && usernameCheck == true && passwordCheck == true && emailCheck == true) {
 		//로그인 성공 ajax 보내기
 		var input = { 
 			"userid" : $("#userid").val(),
 			"username" : $("#username").val(),
-			"userpw" : $("#password").val()
+			"userpw" : $("#password").val(),
+			"email" : $("#email").val()
 			};
 
 		var JsonStr = JSON.stringify(input);
@@ -111,16 +116,16 @@ $("#btnRegister").on("click", function(e) { // 가입버튼
 			},
 			contentType : "application/json; charset=utf-8",
 			success : function(result) {
-				alert("통신 성공!");
+				bootbox.alert("회원가입되었습니다.");
 			},
 			error : function(error) {
-				alert("통신 에러!");
+				bootbox.alert("통신 에러!");
 			}
 		}); // ajax 끝
 			
 		//로그인 성공 ajax 보내기
 	} else {
-		alert("입력 정보를 확인하세요.");
+		bootbox.alert("입력 정보를 확인하세요.");
 	}
 	
 	
@@ -146,6 +151,68 @@ $("#password,#passwordConfirm").on("textchange", function() {
 		passwordCheck = false;
 	}
 });
+
+
+//이메일 정규식 확인
+$('#email').on("blur", function() {
+	if (emailC.test($('#email').val())) {
+		$('#email').attr("class", "form-control form-control-lg rounded-0 is-valid");
+		/////// ajax
+		var input = { 
+			"email" : $("#email").val()
+		};
+	
+		var JsonStr = JSON.stringify(input);
+	
+		$.ajax({
+			url : '/emailCheck',
+			type : 'POST',
+			data : JsonStr,
+			dataType: 'text',
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			contentType : "application/json; charset=utf-8",
+			success : function(result) {
+				if(result == '0') {
+					emailCheck = true;
+					$('#email').attr("class", "form-control form-control-lg rounded-0 is-valid");
+					inputText = $("#email").val();
+					if(inputText.length == 0) {
+						emailCheck = false;
+						$('#email').attr("class", "form-control form-control-lg rounded-0");
+					}
+				} else if(result == '1') {
+					emailCheck = false;
+					$("#invalid2").html("이미 사용중인 이메일입니다.");
+					$('#email').attr("class", "form-control form-control-lg rounded-0 is-invalid");
+					inputText = $("#email").val();
+					if(inputText.length == 0) {
+						emailCheck = false;
+						$('#email').attr("class", "form-control form-control-lg rounded-0");
+					}
+				}
+			},
+			error : function(error) {
+				alert("통신 에러!");
+			}
+		}); // ajax 끝
+		/////// ajax
+	} else {
+		emailCheck = false;
+		$('#email').attr("class", "form-control form-control-lg rounded-0 is-invalid");
+		$("#invalid2").html("유효하지 않은 이메일주소입니다.");
+	} // else 끝
+	if ($("#email").val().length == 0) {
+		$('#email').attr("class", "form-control form-control-lg rounded-0");
+	}
+	
+}) // 함수 끝
+
+
+
+
+
 
 
 }); /* 도큐먼트 레디 괄호 */
@@ -196,7 +263,7 @@ function checkId() { // 아이디체크
 			}
 		},
 		error : function(error) {
-			alert("통신 에러!");
+			bootbox.alert("통신 에러!");
 		}
 	}); // ajax 끝
 	} else if (inputText.length < 5){
@@ -211,6 +278,8 @@ function checkId() { // 아이디체크
 		// 10글자 채웠을때 계속 ajax전송 방지
 	} // if문 끝 
 } // 함수 끝
+
+
 
 
 $('#username').on("blur", function() {   // 유저 닉네임칸 포커스를 잃으면 검사 
@@ -251,7 +320,7 @@ $('#username').on("blur", function() {   // 유저 닉네임칸 포커스를 잃
 			}
 		},
 		error : function(error) {
-			alert("통신 에러!");
+			bootbox.alert("통신 에러!");
 		}
 	}); // ajax 끝
 	} else if (inputText.length < 2){

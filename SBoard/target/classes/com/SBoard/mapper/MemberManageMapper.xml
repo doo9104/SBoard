@@ -10,9 +10,13 @@ select userid from tbl_member where userid= #{userid}
 select username from tbl_member where username = #{username}
 </select>
 
+<select id="getUserEmail" resultType="com.SBoard.vo.MemberVO">
+select email from tbl_member where email = #{email}
+</select>
+
 
 <insert id="createNewMember">
-insert into tbl_member(userid,username,userpw) values(#{userid},#{username},#{userpw})
+insert into tbl_member(userid,username,userpw,email) values(#{userid},#{username},#{userpw},#{email})
 </insert>
 
 <insert id="giveAuth">

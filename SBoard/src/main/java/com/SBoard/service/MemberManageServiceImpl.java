@@ -27,6 +27,11 @@ public class MemberManageServiceImpl implements MemberManageService {
 	public MemberVO getUserName(MemberVO vo) {
 		return mapper.getUserName(vo);
 	}
+	
+	@Override
+	public MemberVO getUserEmail(MemberVO vo) {
+		return mapper.getUserEmail(vo);
+	}
 
 	@Transactional
 	@Override
@@ -34,6 +39,7 @@ public class MemberManageServiceImpl implements MemberManageService {
 		mapper.createNewMember(vo);
 		mapper.giveAuth(vo);
 	}
+
 
 
 	

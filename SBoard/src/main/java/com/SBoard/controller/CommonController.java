@@ -97,6 +97,21 @@ public class CommonController {
 		return result;
 	}
 	
+	
+	@RequestMapping(value = "/emailCheck", method=RequestMethod.POST,consumes = "application/json",produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@ResponseBody
+	public int getUserEmail(@RequestBody MemberVO vo) {
+		int result=0;
+		log.info("vo : " + vo);
+		MemberVO email = service.getUserEmail(vo);
+		if(email!=null) result=1;
+		
+		log.info("이메일체크 결과 : " + result);
+		return result;
+	}	
+	
+	
 	@RequestMapping(value = "/join", method=RequestMethod.POST,consumes = "application/json",produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public void createMember(@RequestBody MemberVO vo) {

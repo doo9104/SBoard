@@ -62,6 +62,7 @@ width:600px;
 }
 </style>
 
+
 <p/>
 <div class="col-lg-12" style="border-style:solid;border-radius: 15px;border-color:#E9ECEF;margin-top:30px;margin-bottom:30px;">
   <fieldset>
@@ -155,8 +156,7 @@ width:600px;
 <!-- 스크립트 시작  -->
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	
+
 	ClassicEditor
 	.create( document.querySelector( '#bcontent' ), {	
 	} )
@@ -167,6 +167,7 @@ $(document).ready(function() {
 	.catch( error => {
 	        console.error( error );
 	} );
+
 	
 	// 시큐리티 csrf 토큰 헤더 설정
 	var csrfHeaderName = "${_csrf.headerName}";
