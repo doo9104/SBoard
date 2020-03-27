@@ -6,7 +6,11 @@
 <%@include file="./includes/header.jsp" %>
 
 <!-- <script src="/resources/js/login.js"></script> -->
-<script src="/resources/js/test.js"></script>
+<script src="/resources/js/textchange.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.oLoader.min.js"></script>
+
+
+
  <div class="row">
         <div class="col-md-12">
 		<div class="col-md-12 text-center mb-5">
@@ -68,8 +72,6 @@
 <!-- 알림 -->
 
 
-<!-- 알림 -->
-
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -86,8 +88,8 @@ var csrfHeaderName = "${_csrf.headerName}",
 
 
 
-
-$("#btnRegister").on("click", function(e) { // 가입버튼
+	// 가입버튼
+$("#btnRegister").on("click", function(e) { 
 	e.preventDefault();
 	if($("#userid").val() == ""){ bootbox.alert("아이디를 입력하세요."); $("#userid").focus(); return false; }
 	if($("#username").val() == ""){ bootbox.alert("닉네임을 입력하세요."); $("#username").focus(); return false; }
@@ -113,17 +115,20 @@ $("#btnRegister").on("click", function(e) { // 가입버튼
 			dataType: 'text',
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				$('body').loading();
 			},
 			contentType : "application/json; charset=utf-8",
 			success : function(result) {
-				bootbox.alert("회원가입되었습니다.");
+				bootbox.alert("회원가입 완료를 위한 이메일을 발송하였습니다.");
 			},
 			error : function(error) {
 				bootbox.alert("통신 에러!");
+			},complete:function(){
+				$('body').loading('stop');
 			}
 		}); // ajax 끝
 			
-		//로그인 성공 ajax 보내기
+		//성공 ajax 보내기
 	} else {
 		bootbox.alert("입력 정보를 확인하세요.");
 	}
@@ -161,8 +166,9 @@ $('#email').on("blur", function() {
 		var input = { 
 			"email" : $("#email").val()
 		};
-	
+
 		var JsonStr = JSON.stringify(input);
+
 	
 		$.ajax({
 			url : '/emailCheck',

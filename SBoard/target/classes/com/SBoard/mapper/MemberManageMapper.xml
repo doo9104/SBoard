@@ -16,12 +16,16 @@ select email from tbl_member where email = #{email}
 
 
 <insert id="createNewMember">
-insert into tbl_member(userid,username,userpw,email) values(#{userid},#{username},#{userpw},#{email})
+insert into tbl_member(userid,username,userpw,email,authkey) values(#{userid},#{username},#{userpw},#{email},#{authkey})
 </insert>
 
 <insert id="giveAuth">
 insert into tbl_member_auth(userid,auth) values(#{userid},'ROLE_USER')
 </insert>
+
+<update id="setActivity">
+update tbl_member set enabled = #{activeCode} where userid = #{userid} and email = #{email}
+</update>
 
 
 

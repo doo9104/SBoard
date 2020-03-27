@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,10 +28,7 @@ public class CommonController {
 	
 	@Autowired(required=true)
 	private MemberManageService service;
-	
-	@Autowired(required=true)
-	private PasswordEncoder pwencoder;
-	
+		
 	// 접근 권한 거부
 	@GetMapping("/accessError")
 	public void accessDenied(Authentication auth, Model model) {
@@ -114,13 +112,29 @@ public class CommonController {
 	
 	@RequestMapping(value = "/join", method=RequestMethod.POST,consumes = "application/json",produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public void createMember(@RequestBody MemberVO vo) {
-
-		vo.setUserpw(pwencoder.encode(vo.getUserpw()));
+	public void createMember(@RequestBody MemberVO vo) throws Exception{
+		
 		log.info("vo : " + vo);
 		
 		 service.createNewMember(vo);
 	}
+	
+	@RequestMapping(value = "/joinConfirm", method=RequestMethod.GET)
+	public String joinConfirm(MemberVO vo,Model model) throws Exception {
+		
+		
+		vo.setActiveCode(1); // enabled를 1로 업데이트
+		log.info(vo);
+		service.setActivity(vo);
+		
+		model.addAttribute("userid",vo.getUserid());
+		
+		
+		
+		return "/joinConfirm";
+	}
+	
+	
 	
 	
 	

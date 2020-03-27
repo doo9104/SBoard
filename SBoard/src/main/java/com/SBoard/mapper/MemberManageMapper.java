@@ -1,5 +1,7 @@
 package com.SBoard.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.SBoard.vo.MemberVO;
 
 public interface MemberManageMapper {
@@ -13,4 +15,6 @@ public interface MemberManageMapper {
 	public void createNewMember(MemberVO vo);
 	
 	public void giveAuth(MemberVO vo);
+	
+	public void setActivity(MemberVO vo);
 }

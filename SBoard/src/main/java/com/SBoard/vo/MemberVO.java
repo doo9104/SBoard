@@ -13,6 +13,8 @@ public class MemberVO {
 	private String username;
 	private boolean enabled;
 	private String email;
+	private String authkey;
+	private int activeCode;
 	
 	private Date regDate;
 	private Date updateDate;

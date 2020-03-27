@@ -1,5 +1,6 @@
 package com.SBoard.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.SBoard.mapper.BoardMapper;
@@ -21,6 +22,7 @@ public interface MemberManageService {
 	public MemberVO getUserEmail(MemberVO vo);
 	
 	// 회원가입
-	public void createNewMember(MemberVO vo);
-	// 회원기입연동 일반사용자권한주기
+	public void createNewMember(MemberVO vo) throws Exception;
+	// 이메일인증 클릭 활성화
+	public void setActivity(MemberVO vo);
 }
