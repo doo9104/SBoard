@@ -1,12 +1,8 @@
 package com.SBoard.service;
 
-import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.SBoard.mapper.BoardMapper;
 import com.SBoard.vo.MemberVO;
 
-import lombok.Setter;
+
 
 public interface MemberManageService {
 
@@ -25,4 +21,7 @@ public interface MemberManageService {
 	public void createNewMember(MemberVO vo) throws Exception;
 	// 이메일인증 클릭 활성화
 	public void setActivity(MemberVO vo);
+	
+	//비밀번호 확인
+	public boolean checkPassword(String userpw);
 }

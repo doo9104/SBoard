@@ -239,7 +239,7 @@ public class BoardController {
 		
 	}
 	
-
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/like", method=RequestMethod.POST,consumes = "application/json",
 			produces = { MediaType.TEXT_PLAIN_VALUE })
 	@ResponseBody

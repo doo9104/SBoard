@@ -41,7 +41,7 @@ public class CommonController {
 	
 	// 커스텀로그인
 	@GetMapping("/customLogin")
-	public void loginInput(String error, String logout, Model model) {
+	public void loginInput(String error, String logout, Model model,HttpServletRequest req) {
 		
 		log.info("Error : " + error);
 		log.info("logout : " + logout);
@@ -53,6 +53,7 @@ public class CommonController {
 		if (logout != null) {
 			model.addAttribute("logout", "Logout!");
 		}
+	
 		
 	}
 	
@@ -135,7 +136,25 @@ public class CommonController {
 	}
 	
 	
+	////////////////////////////////////////////////////////////////////////////////
+	//									마이페이지									  //
+	////////////////////////////////////////////////////////////////////////////////
+	@GetMapping("/mypage")
+	public void mypage() {
+						
+	}
+										
+	@RequestMapping(value = "/mypage/passwordConfirm", method=RequestMethod.POST,consumes = "application/json",produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public void passwordConfirm(@RequestBody MemberVO vo) throws Exception{		
+	log.info(vo.getUserpw());
+	boolean result = service.checkPassword(vo.getUserpw());
+	if(result) {
+		log.info("비밀번호 일치");
+	} else {
+		log.info("비밀번호 불일치");
+	}
 	
-	
-	
+		
+	}
 }

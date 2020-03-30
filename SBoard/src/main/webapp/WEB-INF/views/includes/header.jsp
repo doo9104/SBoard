@@ -49,7 +49,7 @@
       <sec:authorize access="isAuthenticated()"> <!-- 로그인되있을때 로그아웃 -->
      	<div class="row">
      	<div class="col-md-5">
-     	<a class="nav-link"><sec:authentication property="principal.username"/></a>
+     	<a class="nav-link" href="www.naver.com"><sec:authentication property="principal.username"/></a>
      	</div>
      	<div class="col-md-7">
         <form id="logoutForm" action="/customLogout" method='post'>
@@ -93,7 +93,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
 	//로그아웃버튼
 $("#logout").on("click", function(e) {	
 	e.preventDefault();

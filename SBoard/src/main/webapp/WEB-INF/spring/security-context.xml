@@ -8,10 +8,10 @@
 
 
 <bean id="customAccessDenied" class="com.SBoard.security.CustomAccessDeniedHandler"></bean>
-<!-- <bean id="customLoginSuccess" class="com.SBoard.security.CustomLoginSuccessHandler"></bean> -->
 <!-- <bean id="customPasswordEncoder" class="com.SBoard.security.CustomNoOpPasswordEncoder"></bean> -->
 <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 <bean id="CustomUserDetailsService" class="com.SBoard.security.CustomUserDetailsService"></bean>
+<!-- <bean id="customLoginSuccess" class="com.SBoard.security.CustomLoginSuccessHandler"></bean> -->
 
 
 <security:http>
@@ -21,9 +21,13 @@
 	
 	<security:intercept-url pattern="/board/register" access="hasAnyRole('ROLE_USER,ROLE_MEMBER,ROLE_ADMIN')"/>
 	
+	<security:intercept-url pattern="/board/like" access="hasAnyRole('ROLE_USER,ROLE_MEMBER,ROLE_ADMIN')"/>
+	
+	
+	
 	<!-- 커스텀 로그인 -->
 	<!-- <security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/> -->
-	<security:form-login login-page="/customLogin"  default-target-url="/board/list"/>
+	<security:form-login login-page="/customLogin" default-target-url="/board/list"/>
 	
 	<!-- 로그아웃 -->
 	<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="JSESSION_ID" />

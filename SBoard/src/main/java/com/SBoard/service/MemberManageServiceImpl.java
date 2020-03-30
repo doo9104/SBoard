@@ -166,6 +166,13 @@ public class MemberManageServiceImpl implements MemberManageService {
 		vo.setActiveCode(1);
 		mapper.setActivity(vo);
 	}
+
+	@Override
+	public boolean checkPassword(String userpw) {
+		userpw = pwencoder.encode(userpw);
+		return mapper.checkPassword(userpw);
+		
+	}
 		
 		
 	

@@ -27,6 +27,9 @@ insert into tbl_member_auth(userid,auth) values(#{userid},'ROLE_USER')
 update tbl_member set enabled = #{activeCode} where userid = #{userid} and email = #{email}
 </update>
 
+<select id="checkPassword" resultType="int">
+select count(*) from tbl_member where userpw = #{userpw} 
+</select>
 
 
 
