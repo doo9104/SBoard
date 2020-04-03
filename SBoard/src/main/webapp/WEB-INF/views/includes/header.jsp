@@ -10,7 +10,7 @@
 <title><spring:message code="site.title" text="SBoard" /></title>
 
 <!-- <link href="/resources/css/bootstrap-min.css" rel="stylesheet" type="text/css"> -->
-<link href="/resources/css/all.css" rel="stylesheet">
+<link href="/resources/css/all.css" rel="stylesheet"> <!-- 폰트어썸 -->
  <script defer src="/resources/js/all.js"></script>
 <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css">
 <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -49,22 +49,22 @@
       <sec:authorize access="isAuthenticated()"> <!-- 로그인되있을때 로그아웃 -->
      	<div class="row">
      	<div class="col-md-5">
-     	<a class="nav-link" href="www.naver.com"><sec:authentication property="principal.username"/></a>
+     	<a class="nav-link" href="/mypage?userid=<sec:authentication property="principal.username"/>"><sec:authentication property="principal.username"/></a>
      	</div>
      	<div class="col-md-7">
         <form id="logoutForm" action="/customLogout" method='post'>
 			<input type='hidden' name="${_csrf.parameterName}" value="${_csrf.token}" />
-			<a class="nav-link" id="logout" href="#">로그아웃</a>
+			<a class="nav-link" id="logout" href="#"><spring:message code="main.logout" /></a> <!-- 로그아웃 -->
 		</form>
 		</div>
 		</div>
       </sec:authorize>
       <sec:authorize access="isAnonymous()"> <!-- 로그아웃상태일때 로그인 -->
-      	<a class="nav-link" href="/customLogin">로그인</a>
+      	<a class="nav-link" href="/customLogin"><spring:message code="main.login" /></a> <!-- 로그인 -->
       </sec:authorize>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/join">회원가입</a>
+        <a class="nav-link" href="/join"><spring:message code="main.join" /></a> <!-- 회원가입 -->
       </li>
     </ul>
 	<!-- </nav> -->

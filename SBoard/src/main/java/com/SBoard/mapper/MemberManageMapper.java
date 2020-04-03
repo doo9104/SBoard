@@ -18,5 +18,9 @@ public interface MemberManageMapper {
 	
 	public void setActivity(MemberVO vo);
 	
-	public boolean checkPassword(String userpw);
+	public String checkPassword(MemberVO vo);
+	
+	public MemberVO getUserInfo(MemberVO vo);
+	
+	public void modifyUserInfo(MemberVO vo);
 }

@@ -15,13 +15,14 @@
 
 
 <security:http>
-
+	
 	<security:intercept-url pattern="/board/list" access="permitAll"/>
 	<security:intercept-url pattern="/join" access="permitAll"/>
 	
-	<security:intercept-url pattern="/board/register" access="hasAnyRole('ROLE_USER,ROLE_MEMBER,ROLE_ADMIN')"/>
+	<!-- <security:intercept-url pattern="/board/register" access="hasAnyRole('ROLE_USER,ROLE_MEMBER,ROLE_ADMIN')"/> -->
 	
 	<security:intercept-url pattern="/board/like" access="hasAnyRole('ROLE_USER,ROLE_MEMBER,ROLE_ADMIN')"/>
+	<!-- <security:intercept-url pattern="/mypage" access="hasAnyRole('ROLE_USER,ROLE_MEMBER,ROLE_ADMIN')"/> -->
 	
 	
 	
@@ -43,7 +44,7 @@
 </security:http>
 
 
-
+<security:global-method-security pre-post-annotations="enabled"/>
 
 
 <security:authentication-manager>

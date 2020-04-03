@@ -63,7 +63,7 @@ public class UploadController {
 	
 	
 	
-	@PreAuthorize("isAuthenticated")
+	@PreAuthorize("isAuthenticated()")	
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<AttachFileDTO>>
@@ -193,7 +193,7 @@ public class UploadController {
 	
 	
 	// 첨부파일 삭제
-		@PreAuthorize("isAuthenticated")
+		@PreAuthorize("isAuthenticated()")
 		@PostMapping("/deleteFile")
 		@ResponseBody
 		public ResponseEntity<String> deleteFile(String fileName, String type) {

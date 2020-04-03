@@ -92,7 +92,7 @@ width:600px;
  	
     <div class="form-group">
       <label for="bwriter"><spring:message code="writer" /></label>
-      <input class="form-control" id="bwriter" name='bwriter' value='<sec:authentication property="principal.username"/>' readonly="readonly"></input>
+      <%-- <input class="form-control" id="bwriter" name='bwriter' value='<sec:authentication property="principal.username"/>' readonly="readonly"></input> --%>
     </div>   
     <button type="submit" class="btn btn-primary"><spring:message code="write.button" /></button>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -129,6 +129,7 @@ heading: { options: [
 	.catch( error => {
 		console.error( error );
 } );
+
 					
 	// 원본 이미지 보여주기			
 function showImage(fileCallPath) {
@@ -148,15 +149,11 @@ $(document).ready(function(e){
 	$("button[type='submit']").on("click", function(e) {
 		
 		e.preventDefault();
-		console.log("submit clicked");
-		
 		var str = "";
 		
 		$(".uploadResult ul li").each(function(i, obj) {
 			
-			var jobj = $(obj);
-			console.dir(jobj);
-			
+			var jobj = $(obj);			
 			
 			str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
 			str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
@@ -220,9 +217,6 @@ $(document).ready(function(e){
 	var csrfHeaderName = "${_csrf.headerName}";
 	var csrfTokenValue = "${_csrf.token}";
 	
-	console.log("csrfHeaderName : " + csrfHeaderName);
-	console.log("csrfTokenValue : " + csrfTokenValue);
-	
 	
 	$("input[type='file']").change(function(e){
 		
@@ -250,7 +244,6 @@ $(document).ready(function(e){
 		type : 'POST',
 		dataType:'json',
 		success: function(result){
-			console.log(result);
 			showUploadResult(result);
 		}
 	}); // $.ajax
@@ -297,7 +290,6 @@ $(document).ready(function(e){
 	
 	// X 버튼 클릭시 이미지 삭제
 	$(".uploadResult").on("click", "button", function(e) {
-		console.log("delete file");
 		
 		var targetFile = $(this).data("file");
 		var type = $(this).data("type");
@@ -313,7 +305,6 @@ $(document).ready(function(e){
 			dataType:'text',
 			type: 'POST',
 				success: function(result) {
-					alert(result);
 					targetLi.remove();
 				}
 		}); // $.ajax
@@ -329,23 +320,7 @@ $(document).ready(function(e){
 		},1000);
 	});
 	
-	/* // 이미지 삭제
-	$(".uploadResult").on("click","span", function(e) {
-		
-		var targetFile = $(this).data("file");
-		var type = $(this).data("type");
-		console.log(targetFile);
-		
-		$.ajax({
-			url: '/deleteFile',
-			data: {fileName: targetFile, type:type},
-			dataType:'text',
-			type: 'POST',
-				success: function(result) {
-					alert(result);
-				}
-		}); // $.ajax
-	}) */
+
 	
 	
 	})

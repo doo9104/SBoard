@@ -27,11 +27,17 @@ insert into tbl_member_auth(userid,auth) values(#{userid},'ROLE_USER')
 update tbl_member set enabled = #{activeCode} where userid = #{userid} and email = #{email}
 </update>
 
-<select id="checkPassword" resultType="int">
-select count(*) from tbl_member where userpw = #{userpw} 
+<select id="checkPassword" resultType="string">
+select userpw from tbl_member where userid = #{userid} 
 </select>
 
+<select id="getUserInfo" resultType="com.SBoard.vo.MemberVO">
+select * from tbl_member where userid = #{userid}
+</select>
 
+<update id="modifyUserInfo">
+update tbl_member set username = #{username}, userpw = #{userpw}, email = #{email}, updatedate = sysdate where userid = #{userid}
+</update>
 
 
 

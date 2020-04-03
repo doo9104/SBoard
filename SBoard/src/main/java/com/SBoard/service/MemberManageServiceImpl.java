@@ -163,15 +163,28 @@ public class MemberManageServiceImpl implements MemberManageService {
 
 	@Override
 	public void setActivity(MemberVO vo) {
-		vo.setActiveCode(1);
+		
 		mapper.setActivity(vo);
 	}
 
 	@Override
-	public boolean checkPassword(String userpw) {
-		userpw = pwencoder.encode(userpw);
-		return mapper.checkPassword(userpw);
+	public int checkPassword(MemberVO vo) {
+		String oldPw = vo.getUserpw();
+		String encPw = mapper.checkPassword(vo);
+
+		if(pwencoder.matches(oldPw, encPw)) { return 1;	} else { return 0; }
+	}
+
+	@Override
+	public MemberVO getUserInfo(MemberVO vo) {
+		return mapper.getUserInfo(vo);
+	}
+
+	@Override
+	public void modifyUserInfo(MemberVO vo) {
+		vo.setUserpw(pwencoder.encode(vo.getUserpw()));
 		
+		mapper.modifyUserInfo(vo);
 	}
 		
 		

@@ -19,9 +19,16 @@ public interface MemberManageService {
 	
 	// 회원가입
 	public void createNewMember(MemberVO vo) throws Exception;
+	
 	// 이메일인증 클릭 활성화
 	public void setActivity(MemberVO vo);
 	
-	//비밀번호 확인
-	public boolean checkPassword(String userpw);
+	// 비밀번호 확인
+	public int checkPassword(MemberVO vo);
+	
+	// 유저 정보 가져오기 - 마이페이지
+	public MemberVO getUserInfo(MemberVO vo);
+	
+	// 유저정보 업데이트 - 마이페이지
+	public void modifyUserInfo(MemberVO vo);
 }
