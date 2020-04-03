@@ -1,10 +1,13 @@
 package com.SBoard.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -41,7 +45,7 @@ public class CommonController {
 	
 	// 커스텀로그인
 	@GetMapping("/customLogin")
-	public void loginInput(String error, String logout, Model model,HttpServletRequest req) {
+	public void loginInput(String error, String logout, Model model) {
 		
 		log.info("Error : " + error);
 		log.info("logout : " + logout);
@@ -53,7 +57,6 @@ public class CommonController {
 		if (logout != null) {
 			model.addAttribute("logout", "Logout!");
 		}
-	
 		
 	}
 	
@@ -135,26 +138,60 @@ public class CommonController {
 		return "/joinConfirm";
 	}
 	
-	
 	////////////////////////////////////////////////////////////////////////////////
 	//									마이페이지									  //
 	////////////////////////////////////////////////////////////////////////////////
+	@PreAuthorize("isAuthenticated() and (principal.username == #userid)") // 다른 유저가 url 파라미터에 다른 계정 아이디로 접근하는것을 방지
 	@GetMapping("/mypage")
-	public void mypage() {
-						
-	}
-										
-	@RequestMapping(value = "/mypage/passwordConfirm", method=RequestMethod.POST,consumes = "application/json",produces = {
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public void passwordConfirm(@RequestBody MemberVO vo) throws Exception{		
-	log.info(vo.getUserpw());
-	boolean result = service.checkPassword(vo.getUserpw());
-	if(result) {
-		log.info("비밀번호 일치!!");
-	} else {
-		log.info("비밀번호 불일치");
+	public void mypage(@RequestParam String userid,Model model) {
+		MemberVO vo = new MemberVO();
+		
+		vo.setUserid(userid);
+		log.info(vo);
+		
+		model.addAttribute("userinfo",service.getUserInfo(vo)); 
 	}
 	
-		
+	
+	@PreAuthorize("isAuthenticated()")	
+	@ResponseBody
+	@RequestMapping(value = "/mypage/passwordConfirm", method=RequestMethod.POST,consumes = "application/json",produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public int passwordConfirm(@RequestBody MemberVO vo,Model model) throws Exception{		
+	log.info(vo.getUserpw());
+	int result = service.checkPassword(vo);
+	if(result == 1) {
+		log.info("비밀번호 일치 : " + vo);
+		//model.addAttribute("user",service.getUserInfo(vo));
+		//log.info(service.getUserInfo(vo));
+		return 1;
+	} else {
+		log.info("비밀번호 불일치");
+		return 0;
 	}
+	}
+	
+	
+	@PreAuthorize("isAuthenticated()")	
+	@ResponseBody
+	@RequestMapping(value = "/updateUserInfo", method=RequestMethod.POST,consumes = "application/json",produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public void updateUserInfo(@RequestBody MemberVO vo) throws Exception{
+		service.modifyUserInfo(vo);
+		log.info(vo);
+	}
+	
+	@PreAuthorize("isAuthenticated()")	
+	@ResponseBody
+	@RequestMapping(value = "/dropUser", method=RequestMethod.POST,consumes = "application/json",produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public void dropUser(@RequestBody MemberVO vo) throws Exception{
+		log.info("변경전 vo : " + vo);
+		vo.setActiveCode(0); // enabled를 0으로 업데이트
+		service.setActivity(vo);
+		log.info("변경후 vo : " + vo);
+	}
+	
+	
+	
 }
