@@ -150,7 +150,7 @@ public class CommonController {
 	log.info(vo.getUserpw());
 	boolean result = service.checkPassword(vo.getUserpw());
 	if(result) {
-		log.info("비밀번호 일치");
+		log.info("비밀번호 일치!!");
 	} else {
 		log.info("비밀번호 불일치");
 	}
